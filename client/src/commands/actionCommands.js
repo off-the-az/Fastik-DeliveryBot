@@ -11,7 +11,7 @@ const doc = new GoogleSpreadsheet(process.env.GS_SpreadSheetID);
 
 const cred = {
     client_email: process.env.GS_client_email,
-    private_key: String(process.env.GS_private_key),
+    private_key: process.env.GS_private_key.replace(/\\n/g, "\n"),
 };
 
 function countSum(list){
