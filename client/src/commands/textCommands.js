@@ -4,6 +4,7 @@ const {User, Auth} = require('../api/controller/index');
 
 function readCommandsText(bot){
     bot.command('start', async (ctx) => {
+        console.log(ctx.chat);
         let Users = new User();
         let user = await Users.getByUsername(ctx.chat.username);
         if(user === undefined){
