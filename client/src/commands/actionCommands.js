@@ -140,7 +140,7 @@ function readCommandsAction(bot){
             }else{
                 await doc.useServiceAccountAuth({
                     client_email: process.env.GS_client_email,
-                    private_key: process.env.GS_private_key.split(String.raw`\n`).join('\n'),
+                    private_key: process.env.GS_private_key,
                 });
                 let string_busket = ""
                 let i = 0;

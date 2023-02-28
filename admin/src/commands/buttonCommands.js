@@ -33,7 +33,7 @@ function readButtonCommands(bot){
         await ctx.deleteMessage();
         await doc.useServiceAccountAuth({
             client_email: process.env.GS_client_email,
-            private_key: process.env.GS_private_key.split(String.raw`\n`).join('\n'),
+            private_key: process.env.GS_private_key,
         });
         try {
             let Tickets = new Ticket();
@@ -67,7 +67,7 @@ function readButtonCommands(bot){
         await ctx.deleteMessage();
         await doc.useServiceAccountAuth({
             client_email: process.env.GS_client_email,
-            private_key: process.env.GS_private_key.split(String.raw`\n`).join('\n'),
+            private_key: process.env.GS_private_key,
         });
         try {
             let Tickets = new Ticket();
