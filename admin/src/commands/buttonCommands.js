@@ -8,6 +8,10 @@ const {Ticket, User} = require('../api/controller/index');
 const { courier_menu_btn } = require('../models/buttons');
 
 const doc = new GoogleSpreadsheet(process.env.GS_SpreadSheetID);
+const cred = {
+    client_email: process.env.GS_client_email,
+    private_key: process.env.GS_private_key,
+};
 
 let userTickets = [];
 let numberOfTicketInList = 0;
@@ -31,10 +35,7 @@ function readButtonCommands(bot){
     bot.action(/finish_booking_(.+)/, async (ctx) => {
         const [ticket_id] = await ctx.match.slice(1);
         await ctx.deleteMessage();
-        await doc.useServiceAccountAuth({
-            client_email: process.env.GS_client_email,
-            private_key: process.env.GS_private_key,
-        });
+        await doc.useServiceAccountAuth(cred);
         try {
             let Tickets = new Ticket();
             let Users = new User();
@@ -65,10 +66,8 @@ function readButtonCommands(bot){
     bot.action(/finish_delivery_(.+)/, async (ctx) => {
         const [ticket_id] = await ctx.match.slice(1);
         await ctx.deleteMessage();
-        await doc.useServiceAccountAuth({
-            client_email: process.env.GS_client_email,
-            private_key: process.env.GS_private_key,
-        });
+        
+        await doc.useServiceAccountAuth(cred);
         try {
             let Tickets = new Ticket();
             await Tickets.updateTicket(ticket_id, {status: 2});

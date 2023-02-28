@@ -8,6 +8,10 @@ const {getAdress} = require('./inputCommands');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const doc = new GoogleSpreadsheet(process.env.GS_SpreadSheetID);
+const cred = {
+    client_email: process.env.GS_client_email,
+    private_key: process.env.GS_private_key,
+};
 
 function countSum(list){
     let sum = 0;
@@ -138,10 +142,7 @@ function readCommandsAction(bot){
             }else if(user.payMethod === ""){
                 await ctx.scene.enter('setpaymethod');
             }else{
-                await doc.useServiceAccountAuth({
-                    client_email: process.env.GS_client_email,
-                    private_key: process.env.GS_private_key,
-                });
+                await doc.useServiceAccountAuth(cred);
                 let string_busket = ""
                 let i = 0;
                 user.busket.forEach(item => {
