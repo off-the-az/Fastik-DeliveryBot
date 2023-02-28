@@ -130,67 +130,60 @@ function readCommandsAction(bot){
 
     bot.action('finish_order', async (ctx) => {
         await ctx.deleteMessage();
-        try {
-
-            let Tickets = new Ticket();
-            let Users = new User();
-            user = await Users.getByUsername(ctx.chat.username)
-            if(user.pnumber === ""){
-                await ctx.scene.enter('setNumber');
-            }else if(user.client_name === ""){
-                await ctx.scene.enter('setName');
-            }else if(user.payMethod === ""){
-                await ctx.scene.enter('setpaymethod');
-            }else{
-                await doc.useServiceAccountAuth(cred);
-                let string_busket = ""
-                let i = 0;
-                user.busket.forEach(item => {
-                    string_busket += `${++i}) ${item.name} - ${item.price} грн/о.т (${item.amount}шт).\n`
-                })
-                let date = new Date();
-                let result = await Tickets.addTicket({
-                    itemlist: user.busket,
-                    owner: user.client_name,
-                    adress: user.adress,
-                    pnumber: user.pnumber,
-                    tPrice: countSum(user.busket),
-                    from: user.busket[0].from,
-                    payMethod: user.payMethod,
-                    date: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()-1}:${date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()}:${date.getSeconds()}`,
-                });
-                let tickets = await Tickets.getAllByStatus(0);
-                let ticket;
-                tickets.forEach(row => {
-                    let compInfo = String(row.date);
-                    if(compInfo === result.date && row.owner === result.owner){
-                        ticket = row;
-                    }
-                });
-                const raw = {
-                    'Унікальний номер чеку': ticket._id,
-                    'Покупець': ticket.owner,
-                    'Кошик': string_busket,
-                    'Заклад': ticket.from,
-                    'Адреса доставки': ticket.adress,
-                    'Номер телефону клієнта': ticket.pnumber,
-                    'Сумма': ticket.tPrice,
-                    'Спосіб оплати': ticket.payMethod,
-                    'Дата замовлення': ticket.date,
-                    'Кур\'єр': ticket.courier,
-                    'Статус': 'В обробці',
-                };
-                await doc.loadInfo();
-                const sheet = doc.sheetsById[434269134];
-                await sheet.addRow(raw);
-                
-                await Users.updateUser(ctx.chat.username, {busket: [], adress: "", payMethod: ""})
-                await ctx.reply('Замовлення успішно оформленно✅\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn});    
-            }
-        } catch (error) {
-            console.log('====================================');
-            console.log(`Error while finishing order. ${error}`);
-            console.log('====================================');
+        let Tickets = new Ticket();
+        let Users = new User();
+        user = await Users.getByUsername(ctx.chat.username)
+        if(user.pnumber === ""){
+            await ctx.scene.enter('setNumber');
+        }else if(user.client_name === ""){
+            await ctx.scene.enter('setName');
+        }else if(user.payMethod === ""){
+            await ctx.scene.enter('setpaymethod');
+        }else{
+            await doc.useServiceAccountAuth(cred);
+            let string_busket = ""
+            let i = 0;
+            user.busket.forEach(item => {
+                string_busket += `${++i}) ${item.name} - ${item.price} грн/о.т (${item.amount}шт).\n`
+            })
+            let date = new Date();
+            let result = await Tickets.addTicket({
+                itemlist: user.busket,
+                owner: user.client_name,
+                adress: user.adress,
+                pnumber: user.pnumber,
+                tPrice: countSum(user.busket),
+                from: user.busket[0].from,
+                payMethod: user.payMethod,
+                date: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()-1}:${date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()}:${date.getSeconds()}`,
+            });
+            let tickets = await Tickets.getAllByStatus(0);
+            let ticket;
+            tickets.forEach(row => {
+                let compInfo = String(row.date);
+                if(compInfo === result.date && row.owner === result.owner){
+                    ticket = row;
+                }
+            });
+            const raw = {
+                'Унікальний номер чеку': ticket._id,
+                'Покупець': ticket.owner,
+                'Кошик': string_busket,
+                'Заклад': ticket.from,
+                'Адреса доставки': ticket.adress,
+                'Номер телефону клієнта': ticket.pnumber,
+                'Сумма': ticket.tPrice,
+                'Спосіб оплати': ticket.payMethod,
+                'Дата замовлення': ticket.date,
+                'Кур\'єр': ticket.courier,
+                'Статус': 'В обробці',
+            };
+            await doc.loadInfo();
+            const sheet = doc.sheetsById[434269134];
+            await sheet.addRow(raw);
+            
+            await Users.updateUser(ctx.chat.username, {busket: [], adress: "", payMethod: ""})
+            await ctx.reply('Замовлення успішно оформленно✅\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn});    
         }
     })
 
