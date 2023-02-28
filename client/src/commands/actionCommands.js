@@ -9,11 +9,9 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const doc = new GoogleSpreadsheet(process.env.GS_SpreadSheetID);
 
-console.log(typeof process.env.GS_client_email);
-
 const cred = {
     client_email: process.env.GS_client_email,
-    private_key: process.env.GS_private_key,
+    private_key: String(process.env.GS_private_key),
 };
 
 function countSum(list){
