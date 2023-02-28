@@ -17,7 +17,7 @@ nameScene.hears(/(.+)/, async ctx => {
     const [name] = ctx.match.slice(1);
     console.log(name);
     let controller = new User();
-    await controller.updateUser(ctx.chat.username, {client_name: String(name)});
+    await controller.updateUser(ctx.chat.id, {client_name: String(name)});
     ctx.scene.leave('setName');
 })
 

@@ -31,9 +31,9 @@ function readCommandsAction(bot){
 
     bot.action('cont_reg', async (ctx) => {
         let Users = new User();
-        let user = await Users.getByUsername(ctx.chat.username);
+        let user = await Users.getByUsername(ctx.chat.id);
         if(user === undefined){
-            await Auth.register(ctx.chat.username)
+            await Auth.register(ctx.chat.id)
         }
         if(user.pnumber === ""){
             await ctx.reply('Бачу, щось пішло не так коли ти вводив свій номер телефону😕\nЩо ж давай це виправимо😉');
@@ -54,7 +54,7 @@ function readCommandsAction(bot){
         }
         list = "";
         let tickets = new Ticket();
-        userTickets = await tickets.getByUsername(`@${ctx.chat.username}%20(${ctx.chat.first_name}%20${ctx.chat.last_name != undefined ? ctx.chat.last_name : '\b'})`);
+        userTickets = await tickets.getByUsername(`@${ctx.chat.id}%20(${ctx.chat.first_name}%20${ctx.chat.last_name != undefined ? ctx.chat.last_name : '\b'})`);
         if(userTickets.length != 0){
             let i = 0;
             userTickets[numberOfTicketInList].itemlist.forEach(el => {
@@ -86,7 +86,7 @@ function readCommandsAction(bot){
         }else ++numberOfTicketInList;
         list = "";
         let tickets = new Ticket();
-        userTickets = await tickets.getByUsername(`@${ctx.chat.username}%20(${ctx.chat.first_name}%20${ctx.chat.last_name != undefined ? ctx.chat.last_name : '\b'})`);
+        userTickets = await tickets.getByUsername(`@${ctx.chat.id}%20(${ctx.chat.first_name}%20${ctx.chat.last_name != undefined ? ctx.chat.last_name : '\b'})`);
         if(userTickets.length != 0){
             let i = 0;
             userTickets[numberOfTicketInList].itemlist.forEach(el => {
@@ -130,7 +130,7 @@ function readCommandsAction(bot){
         await ctx.deleteMessage();
         let Tickets = new Ticket();
         let Users = new User();
-        user = await Users.getByUsername(ctx.chat.username)
+        user = await Users.getByUsername(ctx.chat.id)
         if(user.pnumber === ""){
             await ctx.scene.enter('setNumber');
         }else if(user.client_name === ""){
@@ -180,7 +180,7 @@ function readCommandsAction(bot){
             const sheet = doc.sheetsById[434269134];
             await sheet.addRow(raw);
             
-            await Users.updateUser(ctx.chat.username, {busket: [], adress: "", payMethod: ""})
+            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})
             await ctx.reply('Замовлення успішно оформленно✅\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn});    
         }
     })
@@ -189,7 +189,7 @@ function readCommandsAction(bot){
         const [list, shop_id, item_id] = ctx.match.slice(1);
         await ctx.deleteMessage();
         const controller = new User();
-        const data = await controller.getByUsername(ctx.chat.username);
+        const data = await controller.getByUsername(ctx.chat.id);
         let basket = data.busket;
         if(list === "shop"){
             const shop = shopList.find(shops => shops.id === Number(shop_id));
@@ -206,7 +206,7 @@ function readCommandsAction(bot){
                             "from": shop.name
                         }
                     );
-                    await controller.updateUser(ctx.chat.username, {busket: basket});
+                    await controller.updateUser(ctx.chat.id, {busket: basket});
                     await ctx.scene.enter('initBasket');
                 }
             }else{
@@ -218,7 +218,7 @@ function readCommandsAction(bot){
                         "from": shop.name
                     }
                 );
-                await controller.updateUser(ctx.chat.username, {busket: basket});
+                await controller.updateUser(ctx.chat.id, {busket: basket});
                 await ctx.scene.enter('initBasket');
             }
             
@@ -237,7 +237,7 @@ function readCommandsAction(bot){
                             "from": shop.name
                         }
                     );
-                    await controller.updateUser(ctx.chat.username, {busket: basket});
+                    await controller.updateUser(ctx.chat.id, {busket: basket});
                     await ctx.scene.enter('initBasket');
                 }
             }else{
@@ -249,7 +249,7 @@ function readCommandsAction(bot){
                         "from": shop.name
                     }
                 );
-                await controller.updateUser(ctx.chat.username, {busket: basket});
+                await controller.updateUser(ctx.chat.id, {busket: basket});
                 await ctx.scene.enter('initBasket');
             }
             

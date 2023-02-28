@@ -22,7 +22,7 @@ setPayTypeScene.hears(/(.+)/, async ctx => {
     let controller = new User();
     if(String(paymethod) != 'Скасувати ❌'){
         type = 'adress'
-        await controller.updateUser(ctx.chat.username, {payMethod: String(paymethod)});
+        await controller.updateUser(ctx.chat.id, {payMethod: String(paymethod)});
         await ctx.scene.leave('setNumber');
     }else if(String(paymethod) === 'Скасувати ❌'){
         type = 'cancel';

@@ -65,7 +65,7 @@ function readCommandsButton(bot){
                     break;
                 case 'Кошик 🧺':
                     controller = new User();
-                    data = await controller.getByUsername(ctx.chat.username);
+                    data = await controller.getByUsername(ctx.chat.id);
                     if(data.busket.length != 0){
                         await ctx.reply( 'Твій кошик виглядає ось так:')
                         let list = "";
@@ -81,7 +81,7 @@ function readCommandsButton(bot){
                     break;
                 case 'Очистити 🗑️':
                     controller = new User();
-                    await controller.updateUser(ctx.chat.username, {busket: []});
+                    await controller.updateUser(ctx.chat.id, {busket: []});
                     await ctx.reply('Кошик став порожнім😢', {reply_markup:menu_btn});
                     break;
                 case 'Головна 🚪':
@@ -102,7 +102,7 @@ function readCommandsButton(bot){
                     break;
                 case "Оформити замовлення 📝":
                     controller = new User();
-                    user = await controller.getByUsername(ctx.chat.username);
+                    user = await controller.getByUsername(ctx.chat.id);
                     if(user.busket.length === 0){
                         await ctx.reply( 'Нажаль ти ще нічого не додавав у кошик😢', {reply_markup:menu_btn})
                     }else if(user.adress === ""){
@@ -152,7 +152,7 @@ function readCommandsButton(bot){
                     break;
                 case 'Історія покупок 📒':
                     let tickets = new Ticket();
-                    userTickets = await tickets.getByUsername(`@${ctx.chat.username}%20(${ctx.chat.first_name}%20${ctx.chat.last_name != undefined ? ctx.chat.last_name : '\b'})`);
+                    userTickets = await tickets.getByUsername(`@${ctx.chat.id}%20(${ctx.chat.first_name}%20${ctx.chat.last_name != undefined ? ctx.chat.last_name : '\b'})`);
                     list = "";
                     if(userTickets.length != 0){
                         let i = 0;
