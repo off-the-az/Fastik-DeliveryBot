@@ -19,6 +19,9 @@ api/.env
 admin/.env
 client/.env
 
+admin/src/models/fastik-gsheet.json
+client/src/models/fastik-gsheet.json
+
 
 
 docker-compose.yaml

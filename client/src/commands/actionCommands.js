@@ -1,5 +1,6 @@
 const Telegraf = require('telegraf');
 require('dotenv').config();
+const creds = require('../models/fastik-gsheet.json');
 const {menu_btn} = require('../models/buttons');
 const shopList = require('../models/shops');
 const restList = require('../models/rest');
@@ -9,10 +10,6 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const doc = new GoogleSpreadsheet(process.env.GS_SpreadSheetID);
 
-const cred = {
-    client_email: process.env.GS_client_email,
-    private_key: process.env.GS_private_key.replace(/\\n/g, "\n"),
-};
 
 function countSum(list){
     let sum = 0;
@@ -141,7 +138,7 @@ function readCommandsAction(bot){
         }else if(user.payMethod === ""){
             await ctx.scene.enter('setpaymethod');
         }else{
-            await doc.useServiceAccountAuth(cred);
+            await doc.useServiceAccountAuth(creds);
             let string_busket = ""
             let i = 0;
             user.busket.forEach(item => {

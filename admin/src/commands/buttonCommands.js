@@ -1,5 +1,6 @@
 const Telegraf = require('telegraf');
 require('dotenv').config();
+const creds = require('../models/fastik-gsheet.json');
 const ExcelJS = require('exceljs');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const cmdList = require('../models/cmd.list.json');
@@ -8,10 +9,6 @@ const {Ticket, User} = require('../api/controller/index');
 const { courier_menu_btn } = require('../models/buttons');
 
 const doc = new GoogleSpreadsheet(process.env.GS_SpreadSheetID);
-const cred = {
-    client_email: process.env.GS_client_email,
-    private_key: process.env.GS_private_key,
-};
 
 let userTickets = [];
 let numberOfTicketInList = 0;
@@ -35,7 +32,7 @@ function readButtonCommands(bot){
     bot.action(/finish_booking_(.+)/, async (ctx) => {
         const [ticket_id] = await ctx.match.slice(1);
         await ctx.deleteMessage();
-        await doc.useServiceAccountAuth(cred);
+        await doc.useServiceAccountAuth(creds);
         try {
             let Tickets = new Ticket();
             let Users = new User();
@@ -67,7 +64,7 @@ function readButtonCommands(bot){
         const [ticket_id] = await ctx.match.slice(1);
         await ctx.deleteMessage();
         
-        await doc.useServiceAccountAuth(cred);
+        await doc.useServiceAccountAuth(creds);
         try {
             let Tickets = new Ticket();
             await Tickets.updateTicket(ticket_id, {status: 2});
