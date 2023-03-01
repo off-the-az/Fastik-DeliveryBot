@@ -327,7 +327,7 @@ function readButtonCommands(bot){
         let users = await Users.getAll();
         await ctx.deleteMessage();
         let listOfPersonal = users.filter(user => user.user_lvl != 0 && user.name != String(ctx.chat.id));
-        if(listOfPersonal.length <= numberOfWorkerList){
+        if(listOfPersonal.length <= numberOfWorkerList+1){
             numberOfWorkerList = listOfPersonal.length - 1;
         }else ++numberOfWorkerList;
         if(listOfPersonal.length != 0){
