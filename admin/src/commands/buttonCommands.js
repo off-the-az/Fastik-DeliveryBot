@@ -285,7 +285,6 @@ function readButtonCommands(bot){
         let listOfPersonal = users.filter(user => user.user_lvl != 0 && user.name != String(ctx.chat.id));
         if(listOfPersonal.length != 0){
             if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id)) && (listOfPersonal.length > 1)){
-                await ctx.reply('Перед вами список персоналу служби доставки. Обираєте потрібно користувача і за допомогою команд "" та "" працюємо із даним працівником');
                 await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
                 {
                     reply_markup: {
@@ -328,12 +327,11 @@ function readButtonCommands(bot){
         let users = await Users.getAll();
         await ctx.deleteMessage();
         let listOfPersonal = users.filter(user => user.user_lvl != 0 && user.name != String(ctx.chat.id));
-        if(listOfPersonal.length === numberOfWorkerList){
+        if(listOfPersonal.length <= numberOfWorkerList){
             numberOfWorkerList = listOfPersonal.length - 1;
         }else ++numberOfWorkerList;
         if(listOfPersonal.length != 0){
             if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id)) && (listOfPersonal.length > 1)){
-                await ctx.reply('Перед вами список персоналу служби доставки. Обираєте потрібно користувача і за допомогою команд "" та "" працюємо із даним працівником');
                 await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
                 {
                     reply_markup: {
