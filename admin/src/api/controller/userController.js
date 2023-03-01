@@ -6,7 +6,7 @@ class userController {
     async getByUsername(username){
         let data = null;
         try {
-            await axios.get(`http://127.0.0.1:5000/api/user/get/byName/${username}`)
+            await axios.get(`http://127.0.0.1:5000/api/user/get/byName/${String(username)}`)
                 .then((response) => {
                     data = response.data[0];
                 })
@@ -57,7 +57,7 @@ class userController {
     async updateUser(username, body){
         let data = null;
         try {
-            await axios.put(`http://127.0.0.1:5000/api/user/update/${username}`, body)
+            await axios.put(`http://127.0.0.1:5000/api/user/update/${String(username)}`, body)
                 .then((response) => {
                     data = response.data[0];
                 })
@@ -78,7 +78,7 @@ class userController {
     }
     
     async deleteUserByName(username){
-        await axios.delete(`http://127.0.0.1:5000/api/user/delete/byName/${username}`)
+        await axios.delete(`http://127.0.0.1:5000/api/user/delete/byName/${String(username)}`)
             .then((response) => {
                 console.log(response.data);
             })
