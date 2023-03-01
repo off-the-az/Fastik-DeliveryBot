@@ -20,14 +20,14 @@ nameScene.hears(/(.+)/, async ctx => {
     if(user.user_lvl === 2){
         await controller.updateUser(id, {user_lvl: 1});
         await ctx.reply('Права доступу даного користувача із попереднім рівнем прав доступу "Адміністратор" успішно понижено до рівня "Курʼєр"✅');
-        await ctx.scene.leave('setAdmin');
+        await ctx.scene.leave('setCourier');
     }else if(user.user_lvl === 1){
         await ctx.reply('Такий користувач у нас вже існує і має дані права доступу');
-        await ctx.scene.leave('setAdmin');
+        await ctx.scene.leave('setCourier');
     }else{
         await controller.updateUser(id, {user_lvl: 1});
         await ctx.reply('Інформацію оновлено успішно✅');
-        await ctx.scene.leave('setAdmin');
+        await ctx.scene.leave('setCourier');
     }
 })
 
