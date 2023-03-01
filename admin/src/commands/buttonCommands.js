@@ -30,18 +30,21 @@ function readButtonCommands(bot){
         await generateExcelFileByParam(ctx, type);
     });
     bot.action(/set_admin_(.+)/, async ctx => {
+        await ctx.deleteMessage();
         const [id] = await ctx.match.slice(1);
         let Users = new User();
         await Users.updateUser(id, {user_lvl: 2});
         await ctx.reply(`Права доступу користувача змінено на 'Адміністратор' ✅`);
     });
     bot.action(/set_courier_(.+)/, async ctx => {
+        await ctx.deleteMessage();
         const [id] = await ctx.match.slice(1);
         let Users = new User();
         await Users.updateUser(id, {user_lvl: 1});
         await ctx.reply(`Права доступу користувача змінено на 'Курʼєр' ✅`);
     });
     bot.action(/fired_(.+)/, async ctx => {
+        await ctx.deleteMessage();
         const [id] = await ctx.match.slice(1);
         let Users = new User();
         await Users.updateUser(id, {user_lvl: 0});
