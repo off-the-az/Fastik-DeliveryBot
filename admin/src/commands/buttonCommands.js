@@ -38,10 +38,10 @@ function readButtonCommands(bot){
     });
     bot.action(/set_courier_(.+)/, async ctx => {
         await ctx.deleteMessage();
-        const [id] = await ctx.match.slice(1);
+        const [user_id] = await ctx.match.slice(1);
         let Users = new User();
-        let res = await Users.updateUser(id, {user_lvl: 1});
-        console.log(res);
+        let res = await Users.updateUser(user_id, {user_lvl: 1});
+        console.log(typeof user_id);
         await ctx.reply(`Права доступу користувача змінено на 'Курʼєр' ✅`);
     });
     bot.action(/fired_(.+)/, async ctx => {
