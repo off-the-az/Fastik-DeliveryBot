@@ -283,6 +283,7 @@ function readButtonCommands(bot){
         let Users = new User();
         let users = await Users.getAll();
         let listOfPersonal = users.filter(user => user.user_lvl != 0);
+        console.log(listOfPersonal[numberOfWorkerList].name);
         if(listOfPersonal.length != 0){
             if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id))){
                 await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
@@ -360,6 +361,7 @@ function readButtonCommands(bot){
         let Users = new User();
         let users = await Users.getAll();
         let listOfPersonal = users.filter(user => user.user_lvl != 0);
+        console.log(listOfPersonal[numberOfWorkerList].name);
         await ctx.deleteMessage();
         if(userTickets.length === listOfPersonal){
             numberOfWorkerList = listOfPersonal.length - 1;
