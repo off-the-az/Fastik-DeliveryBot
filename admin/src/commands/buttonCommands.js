@@ -282,44 +282,10 @@ function readButtonCommands(bot){
         }
         let Users = new User();
         let users = await Users.getAll();
-        let listOfPersonal = users.filter(user => user.user_lvl != 0);
-        console.log(listOfPersonal[numberOfWorkerList].name);
+        let listOfPersonal = users.filter(user => user.user_lvl != 0 && user.name != String(ctx.chat.id));
         if(listOfPersonal.length != 0){
-            if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id))){
-                await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
-                {
-                    reply_markup: {
-                        inline_keyboard: numberOfWorkerList != 0 ? [
-                            [
-                                {text: "◀️", callback_data: "previous_worker"},
-                                {text: "▶️", callback_data: "next_worker"}
-                            ],
-                            listOfPersonal[numberOfWorkerList].user_lvl === 1 ? [
-                                {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList].name}`}
-                            ]: [
-                                {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList].name}`}
-                            ],
-                            [
-                                {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList].name}`}
-                            ]
-                        ] : [
-                            [
-                                {text: "▶️", callback_data: "next_worker"}
-                            ],
-                            listOfPersonal[numberOfWorkerList].user_lvl === 1 ? [
-                                {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList]._name}`}
-                            ]: [
-                                {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList]._name}`}
-                            ],
-                            [
-                                {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList]._name}`}
-                            ]
-                        ],
-                        resize_keyboard: true
-                    }
-                });
-            }else if(listOfPersonal.length > 1){
-                --numberOfWorkerList;
+            if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id)) && (listOfPersonal.length > 1)){
+                await ctx.reply('Перед вами список персоналу служби доставки. Обираєте потрібно користувача і за допомогою команд "" та "" працюємо із даним працівником');
                 await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
                 {
                     reply_markup: {
@@ -355,53 +321,20 @@ function readButtonCommands(bot){
             }else{
                 await ctx.reply(`Окрім вас нажаль поки ще нікого немає`);
             }
-        }  
+        }
     });
     bot.action('next_worker', async (ctx) => {
         let Users = new User();
         let users = await Users.getAll();
-        let listOfPersonal = users.filter(user => user.user_lvl != 0);
-        console.log(listOfPersonal[numberOfWorkerList].name);
+        
         await ctx.deleteMessage();
         if(userTickets.length === listOfPersonal){
             numberOfWorkerList = listOfPersonal.length - 1;
         }else ++numberOfWorkerList;
+        let listOfPersonal = users.filter(user => user.user_lvl != 0 && user.name != String(ctx.chat.id));
         if(listOfPersonal.length != 0){
-            if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id))){
-                await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
-                {
-                    reply_markup: {
-                        inline_keyboard: numberOfWorkerList != 0 ? [
-                            [
-                                {text: "◀️", callback_data: "previous_worker"},
-                                {text: "▶️", callback_data: "next_worker"}
-                            ],
-                            listOfPersonal[numberOfWorkerList].user_lvl === 1 ? [
-                                {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList].name}`}
-                            ]: [
-                                {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList].name}`}
-                            ],
-                            [
-                                {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList].name}`}
-                            ]
-                        ] : [
-                            [
-                                {text: "▶️", callback_data: "next_worker"}
-                            ],
-                            listOfPersonal[numberOfWorkerList].user_lvl === 1 ? [
-                                {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList]._name}`}
-                            ]: [
-                                {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList]._name}`}
-                            ],
-                            [
-                                {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList]._name}`}
-                            ]
-                        ],
-                        resize_keyboard: true
-                    }
-                });
-            }else if(listOfPersonal.length > 1){
-                ++numberOfWorkerList;
+            if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id)) && (listOfPersonal.length > 1)){
+                await ctx.reply('Перед вами список персоналу служби доставки. Обираєте потрібно користувача і за допомогою команд "" та "" працюємо із даним працівником');
                 await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
                 {
                     reply_markup: {
@@ -474,44 +407,10 @@ function readButtonCommands(bot){
 async function showAllFromTeam(ctx){
     let Users = new User();
     let users = await Users.getAll();
-    let listOfPersonal = users.filter(user => user.user_lvl != 0);
+    let listOfPersonal = users.filter(user => user.user_lvl != 0 && user.name != String(ctx.chat.id));
     if(listOfPersonal.length != 0){
-        if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id))){
+        if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id)) && (listOfPersonal.length > 1)){
             await ctx.reply('Перед вами список персоналу служби доставки. Обираєте потрібно користувача і за допомогою команд "" та "" працюємо із даним працівником');
-            await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
-            {
-                reply_markup: {
-                    inline_keyboard: numberOfWorkerList != 0 ? [
-                        [
-                            {text: "◀️", callback_data: "previous_worker"},
-                            {text: "▶️", callback_data: "next_worker"}
-                        ],
-                        listOfPersonal[numberOfWorkerList].user_lvl === 1 ? [
-                            {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList].name}`}
-                        ]: [
-                            {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList].name}`}
-                        ],
-                        [
-                            {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList].name}`}
-                        ]
-                    ] : [
-                        [
-                            {text: "▶️", callback_data: "next_worker"}
-                        ],
-                        listOfPersonal[numberOfWorkerList].user_lvl === 1 ? [
-                            {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList]._name}`}
-                        ]: [
-                            {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList]._name}`}
-                        ],
-                        [
-                            {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList]._name}`}
-                        ]
-                    ],
-                    resize_keyboard: true
-                }
-            });
-        }else if(listOfPersonal.length > 1){
-            ++numberOfWorkerList;
             await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
             {
                 reply_markup: {
