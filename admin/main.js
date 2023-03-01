@@ -4,7 +4,6 @@ require('dotenv').config()
 const {Auth} = require('./src/api/controller/index');
 const {courier_menu_btn, admin_menu_btn} = require('./src/models/buttons');
 const readButtonCommands = require('./src/commands/buttonCommands');
-const readActionCommands = require('./src/commands/actionCommands');
 const bot = new Telegraf(process.env.TOKEN);
 
 
@@ -26,6 +25,5 @@ bot.start(async (ctx) => {
 });
 
 readButtonCommands(bot);
-readActionCommands(bot);
 
 bot.launch();

@@ -3,12 +3,33 @@ const axios = require('axios');
 const {md5} = require('../../modules');
 
 class userController {
+
+    async getAll(){
+        let data = null;
+        try {
+            await axios.get(`http://127.0.0.1:5000/api/user/get/`)
+                .then((response) => {
+                    data = response.data;
+                })
+                .catch((error) => {
+                    console.log('Error while operating GET request for User.\nError: ' + error);
+                    data = null;
+                }
+            );
+        } catch (error) {
+            console.log('====================================');
+            console.log('Error at userController.\n Error info: ' + error);
+            console.log('====================================');
+        }
+        return data;
+    }
+
     async getByUsername(username){
         let data = null;
         try {
             await axios.get(`http://127.0.0.1:5000/api/user/get/byName/${String(username)}`)
                 .then((response) => {
-                    data = response.data[0];
+                    data = response.data;
                 })
                 .catch((error) => {
                     console.log('Error while operating GET request for User.\nError: ' + error);
@@ -28,7 +49,7 @@ class userController {
         try {
             await axios.get(`http://127.0.0.1:5000/api/user/get/byId/${String(id)}`)
                 .then((response) => {
-                    data = response.data[0];
+                    data = response.data
                 })
                 .catch((error) => {
                     console.log('Error while operating GET request for User.\nError: ' + error);
