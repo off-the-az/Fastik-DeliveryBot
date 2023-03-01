@@ -14,7 +14,7 @@ bot.use(stage.middleware());
 
 bot.start(async (ctx) => {
 
-    console.log(new MenuShopController().readMenuFromShop());
+    console.log(await new MenuShopController().readMenuFromShop());
 
     let Users = new User();
     let user = await Users.getByUsername(ctx.chat.id);
