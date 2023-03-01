@@ -323,9 +323,6 @@ function readButtonCommands(bot){
                                 {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                             ]
                         ],
-                        keyboard: [
-                            ["Додати нового працівника 👨‍💻"]
-                        ],
                         resize_keyboard: true
                     }
                 });
@@ -372,9 +369,6 @@ function readButtonCommands(bot){
                             [
                                 {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                             ]
-                        ],
-                        keyboard: [
-                            ["Додати нового працівника 👨‍💻"]
                         ],
                         resize_keyboard: true
                     }
@@ -464,9 +458,6 @@ async function showAllFromTeam(ctx){
                         [
                             {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                         ]
-                    ],
-                    keyboard: [
-                        ["Додати нового працівника 👨‍💻"]
                     ],
                     resize_keyboard: true,
                 }
