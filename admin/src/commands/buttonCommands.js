@@ -7,6 +7,7 @@ const creds = require('../models/fastik-gsheet.json');
 const ExcelJS = require('exceljs');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { courier_menu_btn } = require('../models/buttons');
+const readMenuFromShop = require('../module/readMenuFronShop');
 
 const doc = new GoogleSpreadsheet(process.env.GS_SpreadSheetID);
 
@@ -389,7 +390,7 @@ function readButtonCommands(bot){
                 break;
             case "Товари 🗄️":
                 await ctx.reply('In progress');
-                console.log(process.cwd());
+                readMenuFromShop();
                 break;
             case "Хочу в команду 🙋":
                 let Users = new User();
