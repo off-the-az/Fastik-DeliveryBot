@@ -302,12 +302,12 @@ function readButtonCommands(bot){
                                 {text: "▶️", callback_data: "next_worker"}
                             ],
                             listOfPersonal[numberOfWorkerList].user_lvl === 1 ? [
-                                {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList]._name}`}
+                                {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList].name}`}
                             ]: [
-                                {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList]._name}`}
+                                {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList].name}`}
                             ],
                             [
-                                {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList]._name}`}
+                                {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                             ]
                         ],
                         resize_keyboard: true
@@ -349,12 +349,12 @@ function readButtonCommands(bot){
                                 {text: "▶️", callback_data: "next_worker"}
                             ],
                             listOfPersonal[numberOfWorkerList].user_lvl === 1 ? [
-                                {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList]._name}`}
+                                {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList].name}`}
                             ]: [
-                                {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList]._name}`}
+                                {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList].name}`}
                             ],
                             [
-                                {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList]._name}`}
+                                {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                             ]
                         ],
                         resize_keyboard: true
@@ -413,7 +413,7 @@ async function showAllFromTeam(ctx){
                             {text: "▶️", callback_data: "next_worker"}
                         ],
                         listOfPersonal[numberOfWorkerList].user_lvl === 1 ? [
-                            {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList].name}`}
+                            {text: "Призначити Адміністратором", callback_data: `set_admin_${(listOfPersonal[numberOfWorkerList].name)}`}
                         ]: [
                             {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList].name}`}
                         ],
@@ -425,12 +425,12 @@ async function showAllFromTeam(ctx){
                             {text: "▶️", callback_data: "next_worker"}
                         ],
                         listOfPersonal[numberOfWorkerList].user_lvl === 1 ? [
-                            {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList]._name}`}
+                            {text: "Призначити Адміністратором", callback_data: `set_admin_${listOfPersonal[numberOfWorkerList].name}`}
                         ]: [
-                            {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList]._name}`}
+                            {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList].name}`}
                         ],
                         [
-                            {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList]._name}`}
+                            {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                         ]
                     ],
                     resize_keyboard: true
