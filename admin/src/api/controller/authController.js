@@ -7,7 +7,7 @@ async function login(username){
         let controller = new User();
         let user = await controller.getByUsername(username);
         user.logged = true;
-        await controller.updateUser(username,user);
+        await controller.updateUser(username,{logged: true});
         lvl = user.user_lvl; 
     } catch (error) {
         lvl = 0;
