@@ -37,12 +37,12 @@ function readButtonCommands(bot){
         await ctx.reply(`Права доступу користувача змінено на 'Адміністратор' ✅`);
     });
     bot.action(/set_courier_(.+)/, async ctx => {
-        const [user_id] = await ctx.match.slice(1);
-        console.log(user_id + "-" +  Number(user_id));
+        const [username] = await ctx.match.slice(1);
+        console.log(username + "-" +  Number(username));
         await ctx.deleteMessage();
         let Users = new User();
-        let res = await Users.updateUser(Number(user_id), {user_lvl: 1});
-        
+        let res = await Users.updateUser(Number(username), {user_lvl: 1});
+        console.log(res);
         await ctx.reply(`Права доступу користувача змінено на 'Курʼєр' ✅`);
     });
     bot.action(/fired_(.+)/, async ctx => {
