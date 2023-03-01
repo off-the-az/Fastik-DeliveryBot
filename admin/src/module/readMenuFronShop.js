@@ -2,8 +2,8 @@ const shopList = require('../../../MenuDB/shops.json');
 const fs = require('fs');
 const path = require('path');
 
-function readMenuFromShop(params) {
-    console.log(readJson('shops.json'));
+async function readMenuFromShop(params) {
+    console.log(await readJson('shops.json'));
 }
 
 const readFile = (filename) => {
