@@ -29,28 +29,25 @@ function readButtonCommands(bot){
         const [type] = await ctx.match.slice(1);
         await generateExcelFileByParam(ctx, type);
     });
-    bot.action(/set_admin_(.+)/, async ctx => {
+    bot.action(/set_(.+)_(.+)/, async ctx => {
+        const [status, worker] = await ctx.match.slice(1);
+        console.log(status + " - " + worker);
         await ctx.deleteMessage();
-        const [id] = await ctx.match.slice(1);
         let Users = new User();
-        await Users.updateUser(id, {user_lvl: 2});
+        switch (status) {
+            case "admin":
+                await Users.updateUser(worker, {user_lvl: 2});
+                break;
+            case "courier":
+                await Users.updateUser(worker, {user_lvl: 1});
+                break;
+            case "fired":
+                await Users.updateUser(worker, {user_lvl: 0});
+                break;
+            default:
+                break;
+        }
         await ctx.reply(`Права доступу користувача змінено на 'Адміністратор' ✅`);
-    });
-    bot.action(/set_courier_(.+)/, async ctx => {
-        const [username] = await ctx.match.slice(1);
-        console.log(username + "-" +  Number(username));
-        await ctx.deleteMessage();
-        let Users = new User();
-        let res = await Users.updateUser(Number(username), {user_lvl: 1});
-        console.log(res);
-        await ctx.reply(`Права доступу користувача змінено на 'Курʼєр' ✅`);
-    });
-    bot.action(/fired_(.+)/, async ctx => {
-        await ctx.deleteMessage();
-        const [id] = await ctx.match.slice(1);
-        let Users = new User();
-        await Users.updateUser(id, {user_lvl: 0});
-        await ctx.reply(`Права доступу користувача змінено на 'Користувач' ✅`);
     });
     bot.action(/finish_booking_(.+)/, async (ctx) => {
         const [ticket_id] = await ctx.match.slice(1);
@@ -298,7 +295,7 @@ function readButtonCommands(bot){
                                 {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList].name}`}
                             ],
                             [
-                                {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList].name}`}
+                                {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                             ]
                         ] : [
                             [
@@ -310,7 +307,7 @@ function readButtonCommands(bot){
                                 {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList]._name}`}
                             ],
                             [
-                                {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList]._name}`}
+                                {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList]._name}`}
                             ]
                         ],
                         resize_keyboard: true
@@ -345,7 +342,7 @@ function readButtonCommands(bot){
                                 {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList].name}`}
                             ],
                             [
-                                {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList].name}`}
+                                {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                             ]
                         ] : [
                             [
@@ -357,7 +354,7 @@ function readButtonCommands(bot){
                                 {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList]._name}`}
                             ],
                             [
-                                {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList]._name}`}
+                                {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList]._name}`}
                             ]
                         ],
                         resize_keyboard: true
@@ -421,7 +418,7 @@ async function showAllFromTeam(ctx){
                             {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList].name}`}
                         ],
                         [
-                            {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList].name}`}
+                            {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                         ]
                     ] : [
                         [
@@ -433,7 +430,7 @@ async function showAllFromTeam(ctx){
                             {text: "Понизити до Курʼєра", callback_data: `set_courier_${listOfPersonal[numberOfWorkerList]._name}`}
                         ],
                         [
-                            {text: "Позбавити прав доступу", callback_data: `fired_${listOfPersonal[numberOfWorkerList]._name}`}
+                            {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList]._name}`}
                         ]
                     ],
                     resize_keyboard: true
