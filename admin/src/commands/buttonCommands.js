@@ -40,8 +40,8 @@ function readButtonCommands(bot){
         await ctx.deleteMessage();
         const [user_id] = await ctx.match.slice(1);
         let Users = new User();
-        let res = await Users.updateUser(user_id, {user_lvl: 1});
-        console.log(typeof user_id);
+        let res = await Users.updateUser(Number(user_id), {user_lvl: 1});
+        console.log(typeof user_id + "-" +  Number(user_id));
         await ctx.reply(`Права доступу користувача змінено на 'Курʼєр' ✅`);
     });
     bot.action(/fired_(.+)/, async ctx => {
