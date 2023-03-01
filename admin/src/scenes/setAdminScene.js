@@ -16,12 +16,24 @@ nameScene.hears(/(.+)/, async ctx => {
     const [id] = ctx.match.slice(1);
     console.log(id);
     let controller = new User();
-    await controller.updateUser(id, {user_lvl: 2});
-    ctx.scene.leave('setAdmin');
+    let user = controller.getByUsername(id);
+    if(user.user_lvl === 2){
+        await ctx.reply('Такий користувач у нас вже існує і має дані права доступу');
+        await ctx.scene.leave('setAdmin');
+    }else if(user.user_lvl === 1){
+        await controller.updateUser(id, {user_lvl: 2});
+        await ctx.reply('Права доступу даного користувача із попереднім рівнем прав доступу "Курʼєр" успішно підвищено до рівня "Адміністратор"✅');
+        await ctx.scene.leave('setAdmin');
+    }else{
+        await controller.updateUser(id, {user_lvl: 2});
+        await ctx.reply('Інформацію оновлено успішно✅');
+        await ctx.scene.leave('setAdmin');
+    }
+    
 })
 
 nameScene.leave(async ctx => {
-    await ctx.reply('Інформацію оновлено успішно✅');
+    console.log('Leave');
 })
 
 module.exports = nameScene;
