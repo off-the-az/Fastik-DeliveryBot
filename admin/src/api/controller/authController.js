@@ -1,5 +1,5 @@
 const User = require('./userController');
-const {md5} = require('../../modules');
+const {md5} = require('../../modules/encryptionModule');
 
 async function login(username){
     let lvl = 0;

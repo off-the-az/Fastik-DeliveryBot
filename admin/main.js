@@ -5,6 +5,7 @@ const {User} = require('./src/api/controller/index');
 const {courier_menu_btn, admin_menu_btn} = require('./src/models/buttons');
 const readButtonCommands = require('./src/commands/buttonCommands');
 const stage = require('./src/scenes/index');
+const MenuShopController = require("./src/modules/json-file-api-module/controller/MenuShopController");
 
 const bot = new Telegraf(process.env.TOKEN);
 
@@ -12,6 +13,9 @@ bot.use(session());
 bot.use(stage.middleware());
 
 bot.start(async (ctx) => {
+
+    console.log(new MenuShopController().readMenuFromShop());
+
     let Users = new User();
     let user = await Users.getByUsername(ctx.chat.id);
     let lvl = user.user_lvl;

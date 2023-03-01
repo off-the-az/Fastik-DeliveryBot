@@ -1,6 +1,6 @@
 'use strict'
 const axios = require('axios');
-const {md5} = require('../../modules');
+const {md5} = require('../../modules/encryptionModule');
 
 class ticketController {
     async getAllByStatus(status){

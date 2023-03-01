@@ -1,10 +1,5 @@
-const shopList = require('../../../MenuDB/shops.json');
 const fs = require('fs');
 const path = require('path');
-
-async function readMenuFromShop(params) {
-    console.log(await readJson('shops.json'));
-}
 
 const readFile = (filename) => {
     return new Promise((resolve, reject) => {
@@ -24,4 +19,4 @@ const readJson = async (filename) => {
     return JSON.parse(data);
 };
 
-module.exports = readMenuFromShop;
+module.exports = readJson;
