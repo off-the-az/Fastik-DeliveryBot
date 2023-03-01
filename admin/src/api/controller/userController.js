@@ -29,7 +29,7 @@ class userController {
         try {
             await axios.get(`http://127.0.0.1:5000/api/user/get/byName/${String(username)}`)
                 .then((response) => {
-                    data = response.data;
+                    data = response.data[0];
                 })
                 .catch((error) => {
                     console.log('Error while operating GET request for User.\nError: ' + error);
@@ -49,7 +49,7 @@ class userController {
         try {
             await axios.get(`http://127.0.0.1:5000/api/user/get/byId/${String(id)}`)
                 .then((response) => {
-                    data = response.data
+                    data = response.data[0]
                 })
                 .catch((error) => {
                     console.log('Error while operating GET request for User.\nError: ' + error);
