@@ -1,11 +1,15 @@
-const { Telegraf } =  require("telegraf");
+const { session, Telegraf } =  require("telegraf");
+const bot = new Telegraf(process.env.TOKEN);
 require('dotenv').config()
 
 const {User} = require('./src/api/controller/index');
 const {courier_menu_btn, admin_menu_btn} = require('./src/models/buttons');
 const readButtonCommands = require('./src/commands/buttonCommands');
-const bot = new Telegraf(process.env.TOKEN);
+const stage = require('./src/scenes/index');
 
+
+bot.use(session());
+bot.use(stage.middleware());
 
 bot.start(async (ctx) => {
     let Users = new User();

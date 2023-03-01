@@ -49,6 +49,19 @@ function readButtonCommands(bot){
         }
         await ctx.reply(`Права доступу користувача змінено на 'Адміністратор' ✅`);
     });
+    bot.action(/init_(.+)/, async ctx => {
+        const [work_level] = await ctx.match.slice(1);
+        switch (work_level) {
+            case "courier":
+                await ctx.scene.enter('setCourier');
+                break;
+            case "admin":
+                await ctx.scene.enter('setAdmin');
+                break; 
+            default:
+                break;
+        }
+    })
     bot.action(/finish_booking_(.+)/, async (ctx) => {
         const [ticket_id] = await ctx.match.slice(1);
         await ctx.deleteMessage();
@@ -310,6 +323,9 @@ function readButtonCommands(bot){
                                 {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                             ]
                         ],
+                        keyboard: [
+                            ["Додати нового працівника 👨‍💻"]
+                        ],
                         resize_keyboard: true
                     }
                 });
@@ -357,6 +373,9 @@ function readButtonCommands(bot){
                                 {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                             ]
                         ],
+                        keyboard: [
+                            ["Додати нового працівника 👨‍💻"]
+                        ],
                         resize_keyboard: true
                     }
                 });
@@ -382,6 +401,19 @@ function readButtonCommands(bot){
                 let user = await Users.getByUsername(ctx.chat.id);
                 await ctx.reply(`Щоби стати частинкою команди, ти повинен зв'язатись із адміністрацією даної служби доставки та надати свій унікальний номер в базі користувачів\nТвій унікальний номер - ${user.name}`, {reply_markup:{
                     remove_keyboard: true,
+                }}); 
+                break;
+            case "Додати нового працівника 👨‍💻":
+                await ctx.reply(`Щоби додати нового працівника - вкажіть який саме рівень прав доступу він буде мати`, {reply_markup:{
+                    remove_keyboard: true,
+                    inline_keyboard:[
+                        [
+                            {text: "Рівень 'Курʼєр'", callback_data: "init_courier"}
+                        ],
+                        [
+                            {text: "Рівень 'Адміністратор'", callback_data: "init_admin"}
+                        ]
+                    ]
                 }}); 
                 break;
             case 'Взяти замовлення 📝':
@@ -433,7 +465,10 @@ async function showAllFromTeam(ctx){
                             {text: "Позбавити прав доступу", callback_data: `set_fired_${listOfPersonal[numberOfWorkerList].name}`}
                         ]
                     ],
-                    resize_keyboard: true
+                    keyboard: [
+                        ["Додати нового працівника 👨‍💻"]
+                    ],
+                    resize_keyboard: true,
                 }
             });
         }else{
