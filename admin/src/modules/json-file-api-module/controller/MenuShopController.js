@@ -8,7 +8,7 @@ class MenuShopController{
     }
     async addItemToMenuFromShop(shop, item){
         let data = await readJson('shops.json');
-        console.log(data.filter(itemfromData => itemfromData.name === shop));
+        console.log(data.shops.filter(itemfromData => itemfromData.name === shop));
     }
 }
 
