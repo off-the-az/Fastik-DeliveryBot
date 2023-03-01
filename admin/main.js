@@ -14,7 +14,12 @@ bot.use(stage.middleware());
 
 bot.start(async (ctx) => {
 
-    console.log(await new MenuShopController().readMenuFromShop());
+    console.log(await new MenuShopController().addItemToMenuFromShop('Avrora Market', {
+        "id": 3,
+        "name": "Іграшкові роли філадельфія 10 шт",
+        "photo": "./assets/avrora/sushi.jpg",
+        "price": 70
+    }));
 
     let Users = new User();
     let user = await Users.getByUsername(ctx.chat.id);
