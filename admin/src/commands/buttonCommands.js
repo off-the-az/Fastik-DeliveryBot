@@ -284,7 +284,7 @@ function readButtonCommands(bot){
         let users = await Users.getAll();
         let listOfPersonal = users.filter(user => user.user_lvl != 0);
         if(listOfPersonal.length != 0){
-            if((listOfPersonal[numberOfWorkerList]._id != ctx.chat.id)){
+            if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id))){
                 await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
                 {
                     reply_markup: {
@@ -365,7 +365,7 @@ function readButtonCommands(bot){
             numberOfWorkerList = listOfPersonal.length - 1;
         }else ++numberOfWorkerList;
         if(listOfPersonal.length != 0){
-            if((listOfPersonal[numberOfWorkerList]._id != ctx.chat.id)){
+            if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id))){
                 await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
                 {
                     reply_markup: {
@@ -475,7 +475,7 @@ async function showAllFromTeam(ctx){
     let users = await Users.getAll();
     let listOfPersonal = users.filter(user => user.user_lvl != 0);
     if(listOfPersonal.length != 0){
-        if((listOfPersonal[numberOfWorkerList]._id != ctx.chat.id)){
+        if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id))){
             await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
             {
                 reply_markup: {
