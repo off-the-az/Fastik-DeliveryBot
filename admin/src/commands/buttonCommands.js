@@ -444,7 +444,6 @@ function readButtonCommands(bot){
                 await ctx.reply('Оберіть формат витягу нижче аби я зміг сформувати Excel-таблицю:', getGenTypeKeyboard());
                 break;
             case "Персонал 🗂️":
-                await ctx.reply('Перед вами список персоналу служби доставки. Обираєте потрібно користувача і за допомогою команд "" та "" працюємо із даним працівником');
                 await showAllFromTeam(ctx);
                 break;
             case "Товари 🗄️":
@@ -476,6 +475,7 @@ async function showAllFromTeam(ctx){
     let listOfPersonal = users.filter(user => user.user_lvl != 0);
     if(listOfPersonal.length != 0){
         if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id))){
+            await ctx.reply('Перед вами список персоналу служби доставки. Обираєте потрібно користувача і за допомогою команд "" та "" працюємо із даним працівником');
             await ctx.reply(`Унікальний номер працівника: ${listOfPersonal[numberOfWorkerList].name}\nІм'я: ${listOfPersonal[numberOfWorkerList].client_name}\nРівень прав доступу: ${listOfPersonal[numberOfWorkerList].user_lvl === 1 ? '2) Курʼєр' : '3) Адміністратор'}`,
             {
                 reply_markup: {
