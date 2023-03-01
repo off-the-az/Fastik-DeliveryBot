@@ -9,7 +9,7 @@ const bot = new Telegraf(process.env.TOKEN);
 
 
 bot.start(async (ctx) => {
-    let lvl = await Auth.login(ctx.chat.username);
+    let lvl = await Auth.login(ctx.chat.id);
     lvl === 1 ? 
         await ctx.reply(`Вітаю, ${ctx.chat.first_name}🤗\nЛаскаво просимо вас в Кур'єр-Панель системи 'Fastik'. Оберіть пункт з меню через який ви бажаєте працювати із системою😊`, {reply_markup: courier_menu_btn}) : 
         lvl === 2 ? 
