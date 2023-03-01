@@ -11,6 +11,7 @@ bot.start(async (ctx) => {
     let Users = new User();
     let user = await Users.getByUsername(ctx.chat.id);
     let lvl = user.user_lvl;
+    console.log(typeof lvl);
     lvl === 1 ? 
         await ctx.reply(`Вітаю, ${ctx.chat.first_name}🤗\nЛаскаво просимо вас в Кур'єр-Панель системи 'Fastik'. Оберіть пункт з меню через який ви бажаєте працювати із системою😊`, {reply_markup: courier_menu_btn}) : 
         lvl === 2 ? 
