@@ -326,12 +326,11 @@ function readButtonCommands(bot){
     bot.action('next_worker', async (ctx) => {
         let Users = new User();
         let users = await Users.getAll();
-        
         await ctx.deleteMessage();
-        if(userTickets.length === listOfPersonal){
+        let listOfPersonal = users.filter(user => user.user_lvl != 0 && user.name != String(ctx.chat.id));
+        if(listOfPersonal.length === numberOfWorkerList){
             numberOfWorkerList = listOfPersonal.length - 1;
         }else ++numberOfWorkerList;
-        let listOfPersonal = users.filter(user => user.user_lvl != 0 && user.name != String(ctx.chat.id));
         if(listOfPersonal.length != 0){
             if((listOfPersonal[numberOfWorkerList].name != String(ctx.chat.id)) && (listOfPersonal.length > 1)){
                 await ctx.reply('Перед вами список персоналу служби доставки. Обираєте потрібно користувача і за допомогою команд "" та "" працюємо із даним працівником');
