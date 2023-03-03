@@ -31,4 +31,27 @@ async function addProductsToShop(file, shopId, newProducts) {
   }
 }
 
+async function addShop(file, newShop) {
+    try {
+      // Read the JSON file
+      const filepath = path.join(process.cwd(), '..', 'MenuDB', file);
+      const data = await readFileAsync(filepath);
+      const json = JSON.parse(data);
+      // Generate a new ID for the shop
+      const maxId = Math.max(...json.shops.map(shop => shop.id));
+      const newId = maxId + 1;
+  
+      // Add the new shop to the "shops" array
+      const shopData = { id: newId, name: newShop, products: [] };
+      json.shops.push(shopData);
+  
+      // Write the updated JSON back to the file
+      await writeFileAsync(filepath, JSON.stringify(json));
+  
+      console.log(`Added new shop "${newShop.name}" with ID ${newId}`);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 module.exports = addProductsToShop;
