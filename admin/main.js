@@ -20,7 +20,8 @@ bot.start(async (ctx) => {
         "photo": "./assets/avrora/sushi.jpg",
         "price": 70
     })
-    console.log(await new MenuShopController().readMenuFromShop()[0].products);
+    let res = await new MenuShopController().readMenuFromShop();
+    console.log(res[0].products);
 
     let Users = new User();
     let user = await Users.getByUsername(ctx.chat.id);
