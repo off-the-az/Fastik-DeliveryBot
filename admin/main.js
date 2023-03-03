@@ -15,7 +15,7 @@ bot.use(stage.middleware());
 bot.start(async (ctx) => {
 
     await new MenuShopController().addItemToMenuFromShop(1, {
-        "id": 4,
+        "id": 5,
         "name": "Іграшкові роли філадельфія 10 шт",
         "photo": "./assets/avrora/sushi.jpg",
         "price": 70
