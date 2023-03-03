@@ -43,12 +43,13 @@ async function addShop(file, newShop) {
   
       // Add the new shop to the "shops" array
       const shopData = { id: newId, name: newShop, products: [] };
+      console.log(shopData);
       json.shops.push(shopData);
   
       // Write the updated JSON back to the file
       await writeFileAsync(filepath, JSON.stringify(json));
   
-      console.log(`Added new shop "${newShop.name}" with ID ${newId}`);
+      console.log(`Added new shop "${newShop}" with ID ${newId}`);
     } catch (error) {
       console.error(error);
     }
