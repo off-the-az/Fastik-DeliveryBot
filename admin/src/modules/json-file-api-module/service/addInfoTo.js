@@ -21,7 +21,7 @@ async function addProductsToShop(file, shopId, newProducts) {
     json.shops[shopIndex].products.push(newProducts);
 
     // Write the updated JSON back to the file
-    await writeFileAsync('data.json', JSON.stringify(json));
+    await writeFileAsync(filepath, JSON.stringify(json));
 
     console.log(`Added ${newProducts.length} products to shop ${shopId}`);
     return true;
