@@ -11,7 +11,7 @@ class MenuShopController{
         return await addProductsToShop('shops.json', shop, item);   
     }
     async addShopToMenuFromShop(shop){
-        return await addProductsToShop('shops.json', shop);
+        return await addShop('shops.json', shop);
     }
 }
 
