@@ -21,7 +21,7 @@ bot.start(async (ctx) => {
         "price": 70
     })
     let res = await new MenuShopController().readMenuFromShop();
-    console.log(res[0].products);
+    console.log(res.shops[0].products);
 
     let Users = new User();
     let user = await Users.getByUsername(ctx.chat.id);
