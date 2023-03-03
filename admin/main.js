@@ -14,7 +14,7 @@ bot.use(stage.middleware());
 
 bot.start(async (ctx) => {
 
-    console.log(await new MenuShopController().addItemToMenuFromShop('Avrora Market', {
+    console.log(await new MenuShopController().addItemToMenuFromShop(1, {
         "id": 3,
         "name": "Іграшкові роли філадельфія 10 шт",
         "photo": "./assets/avrora/sushi.jpg",
