@@ -13,11 +13,6 @@ bot.use(session());
 bot.use(stage.middleware());
 
 bot.start(async (ctx) => {
-    await new MenuShopController().addItemToMenuFromShop(1, {"id": 1, "name": "2", "photo": "-", "price": 250})
-    await new MenuShopController().addShopToMenuFromShop('Kopiyochka')
-    let res = await new MenuShopController().readMenuFromShop();
-    console.log(res.shops[2]);
-
     let Users = new User();
     let user = await Users.getByUsername(ctx.chat.id);
     let lvl = user.user_lvl;
@@ -34,8 +29,14 @@ bot.start(async (ctx) => {
                         resize_keyboard: true, 
                         is_persistent: true
                     }
-                })
-});
+                }
+            )
+    await new MenuShopController().addItemToMenuFromShop(1, {"id": 1, "name": "2", "photo": "-", "price": 250})
+    await new MenuShopController().addShopToMenuFromShop('Kopiyochka')
+    let res = await new MenuShopController().readMenuFromShop();
+    console.log(res.shops[2]);
+    }
+);
 
 readButtonCommands(bot);
 
