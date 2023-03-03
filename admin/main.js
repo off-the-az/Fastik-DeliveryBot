@@ -15,7 +15,7 @@ bot.use(stage.middleware());
 bot.start(async (ctx) => {
     await new MenuShopController().addShopToMenuFromShop('Kopiyochka')
     let res = await new MenuShopController().readMenuFromShop();
-    console.log(res.shops[3]);
+    console.log(res.shops[2]);
 
     let Users = new User();
     let user = await Users.getByUsername(ctx.chat.id);
