@@ -16,7 +16,9 @@ async function addProductsToShop(file, shopId, newProducts) {
     if (shopIndex === -1) {
       throw new Error(`Shop with ID ${shopId} not found`);
     }
-
+    const maxId = Math.max(...json.shops[shopIndex].products.map(shop => shop.id));
+    const newId = maxId + 1;
+    newProducts.id = newID;
     // Add the new products to the shop
     json.shops[shopIndex].products.push(newProducts);
 
