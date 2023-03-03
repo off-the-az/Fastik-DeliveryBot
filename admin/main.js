@@ -20,7 +20,7 @@ bot.start(async (ctx) => {
         "photo": "./assets/avrora/sushi.jpg",
         "price": 70
     })
-    await new MenuShopController().addItemToMenuFromShop('Kopiyochka')
+    await new MenuShopController().addShopToMenuFromShop('Kopiyochka')
     let res = await new MenuShopController().readMenuFromShop();
     console.log(res.shops[0].products);
     console.log(res.shops[3]);

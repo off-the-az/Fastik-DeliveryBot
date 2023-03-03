@@ -8,7 +8,7 @@ class MenuShopController{
         return await readJson('shops.json');
     }
     async addItemToMenuFromShop(shop, item){
-        return await addProductsToShop('shops.json', shop, item);
+        return await addProductsToShop('shops.json', shop, item);   
     }
     async addShopToMenuFromShop(shop){
         return await addProductsToShop('shops.json', shop);
