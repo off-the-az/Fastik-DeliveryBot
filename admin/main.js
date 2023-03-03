@@ -14,12 +14,13 @@ bot.use(stage.middleware());
 
 bot.start(async (ctx) => {
 
-    console.log(await new MenuShopController().addItemToMenuFromShop(1, {
+    await new MenuShopController().addItemToMenuFromShop(1, {
         "id": 3,
         "name": "Іграшкові роли філадельфія 10 шт",
         "photo": "./assets/avrora/sushi.jpg",
         "price": 70
-    }));
+    })
+    console.log(await new MenuShopController().readMenuFromShop());
 
     let Users = new User();
     let user = await Users.getByUsername(ctx.chat.id);
