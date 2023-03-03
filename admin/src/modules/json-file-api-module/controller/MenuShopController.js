@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const readJson = require('../service/readFileService');
-const addProductsToShop = require('../service/addInfoTo');
+const {addProductsToShop, addShop} = require('../service/addInfoTo');
 
 class MenuShopController{
     async readMenuFromShop() {

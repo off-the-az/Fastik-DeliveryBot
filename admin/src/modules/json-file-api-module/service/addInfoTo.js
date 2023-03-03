@@ -54,4 +54,4 @@ async function addShop(file, newShop) {
     }
   }
 
-module.exports = addProductsToShop;
+module.exports = {addProductsToShop, addShop};
