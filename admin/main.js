@@ -13,16 +13,8 @@ bot.use(session());
 bot.use(stage.middleware());
 
 bot.start(async (ctx) => {
-
-    await new MenuShopController().addItemToMenuFromShop(1, {
-        "id": 4,
-        "name": "Іграшкові роли філадельфія 10 шт",
-        "photo": "./assets/avrora/sushi.jpg",
-        "price": 70
-    })
     await new MenuShopController().addShopToMenuFromShop('Kopiyochka')
     let res = await new MenuShopController().readMenuFromShop();
-    console.log(res.shops[0].products);
     console.log(res.shops[3]);
 
     let Users = new User();
