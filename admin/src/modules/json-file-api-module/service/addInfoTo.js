@@ -23,7 +23,7 @@ async function addProductsToShop(file, shopId, newProducts) {
     // Write the updated JSON back to the file
     await writeFileAsync(filepath, JSON.stringify(json));
 
-    console.log(`Added ${newProducts.length} products to shop ${shopId}`);
+    console.log(`Added ${newProducts} products to shop ${shopId}`);
     return true;
   } catch (error) {
     console.error(error);
