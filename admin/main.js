@@ -31,10 +31,6 @@ bot.start(async (ctx) => {
                     }
                 }
             )
-    await new MenuShopController().addItemToMenuFromShop(1, {"id": 1, "name": "2", "photo": "-", "price": 250})
-    await new MenuShopController().addShopToMenuFromShop('Kopiyochka')
-    let res = await new MenuShopController().readMenuFromShop();
-    console.log(res.shops[2]);
     }
 );
 
