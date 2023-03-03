@@ -18,7 +18,7 @@ async function addProductsToShop(file, shopId, newProducts) {
     }
 
     // Add the new products to the shop
-    json.shops[shopIndex].products.push(...newProducts);
+    json.shops[shopIndex].products.push(newProducts);
 
     // Write the updated JSON back to the file
     await writeFileAsync('data.json', JSON.stringify(json));
