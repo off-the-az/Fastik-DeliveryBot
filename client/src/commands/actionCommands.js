@@ -192,7 +192,7 @@ function readCommandsAction(bot){
         const data = await controller.getByUsername(ctx.chat.id);
         let basket = data.busket;
         if(list === "shop"){
-            const shop = shopList.find(shops => shops.id === Number(shop_id));
+            const shop = shopList.shops.find(shops => shops.id === Number(shop_id));
             const item = shop.products.find(products => products.id === Number(item_id))
             if(basket.length != 0){
                 if(basket[0].from != shop.name){
@@ -223,7 +223,7 @@ function readCommandsAction(bot){
             }
             
         }else if (list === "rest"){
-            const shop = restList.find(shops => shops.id === Number(shop_id));
+            const shop = restList.shops.find(shops => shops.id === Number(shop_id));
             const item = shop.products.find(products => products.id === Number(item_id))
             if(basket.length != 0){
                 if(basket[0].from != shop.name){
@@ -260,11 +260,11 @@ function readCommandsAction(bot){
         await ctx.deleteMessage();
         const [list, shop_id, item_id] = ctx.match.slice(1);
         if(list === "shop"){
-            const shop = shopList.find(shops => shops.id === Number(shop_id));
+            const shop = shopList.shops.find(shops => shops.id === Number(shop_id));
             ctx.session.shop = shop;
             ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, "shop"));
         }else if (list === "rest"){
-            const shop = restList.find(shops => shops.id === Number(shop_id));
+            const shop = restList.shops.find(shops => shops.id === Number(shop_id));
             ctx.session.shop = shop;
             ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, "rest"));
         }
@@ -275,7 +275,7 @@ function readCommandsAction(bot){
         console.log(`get_${list}_${shop_id}_${item_id}`);
         await ctx.deleteMessage();
         if(list === "shop"){
-            const shop = await shopList.find(shops => shops.id === Number(shop_id));
+            const shop = await shopList.shops.find(shops => shops.id === Number(shop_id));
             const item = await shop.products.find(products => products.id === Number(item_id))
             await ctx.sendPhoto(
                 {
@@ -296,7 +296,7 @@ function readCommandsAction(bot){
                 }
             );
         }else if (list === "rest"){
-            const shop = await restList.find(shops => shops.id === Number(shop_id));
+            const shop = await restList.shops.find(shops => shops.id === Number(shop_id));
             const item = await shop.products.find(products => products.id === Number(item_id))
             await ctx.sendPhoto(
                 {
