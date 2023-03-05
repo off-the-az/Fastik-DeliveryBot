@@ -8,7 +8,7 @@ const {User, Ticket} = require('../api/controller/index');
 const {getAdress} = require('./inputCommands');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
-const doc = new GoogleSpreadsheet(process.env.GS_SpreadSheetID);
+const doc = new GoogleSpreadsheet('1RT3cT9YWAlAX0QMIxx8XIVJ2SRz8CqsHSVdhrKxK2vU');
 
 
 function countSum(list){

@@ -8,7 +8,7 @@ const ExcelJS = require('exceljs');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { courier_menu_btn } = require('../models/buttons');
 
-const doc = new GoogleSpreadsheet(process.env.GS_SpreadSheetID);
+const doc = new GoogleSpreadsheet("1RT3cT9YWAlAX0QMIxx8XIVJ2SRz8CqsHSVdhrKxK2vU");
 
 let userTickets = [];
 let numberOfTicketInList = 0;
