@@ -26,10 +26,10 @@ async function addProductsToShop(file, shopId, newProducts) {
     await writeFileAsync(filepath, JSON.stringify(json));
 
     console.log(`Added ${newProducts} products to shop ${shopId}`);
-    return true;
+    return newProducts;
   } catch (error) {
     console.error(error);
-    return false;
+    return null;
   }
 }
 
@@ -52,8 +52,10 @@ async function addShop(file, newShop) {
       await writeFileAsync(filepath, JSON.stringify(json));
   
       console.log(`Added new shop "${newShop}" with ID ${newId}`);
+      return newShop
     } catch (error) {
       console.error(error);
+      return null;
     }
   }
 
