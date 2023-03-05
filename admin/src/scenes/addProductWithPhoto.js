@@ -1,8 +1,7 @@
 const { Scenes } =  require("telegraf");
 const Telegraf = require('telegraf');
 const path = require('path');
-const {menu_btn} = require('../models/buttons');
-const {User} = require('../api/controller/index');
+const {admin_menu_btn} = require('../models/buttons');
 const MenuRestController = require("../modules/json-file-api-module/controller/MenuRestController");
 const MenuShopController = require("../modules/json-file-api-module/controller/MenuShopController");
 const {downloadFile} = require('../modules/photo-api-module/saveFile');
@@ -85,9 +84,13 @@ addProductScene.on('photo', async ctx => {
     }else{
         await new MenuRestController().addItemToMenuFromRest(shop_id, ctx.state.obj);
     }
+    await ctx.scene.leave('addProduct')
 })
 
 addProductScene.leave(async ctx => {
+    await ctx.reply('Товар успішно додано!', {
+        reply_markup: admin_menu_btn
+    });
     console.log('Leave');
 })
 

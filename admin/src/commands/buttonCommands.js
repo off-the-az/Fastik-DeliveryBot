@@ -25,6 +25,12 @@ function getGenTypeKeyboard() {
 
 function readButtonCommands(bot){
 
+    bot.action('add_product', async ctx => {
+        await ctx.scene.enter("addProduct");
+    })
+    bot.action('add_shop', async ctx => {
+        await ctx.scene.enter("addShop");
+    })
     bot.action(/generate_type_(.+)/, async ctx => {
         const [type] = await ctx.match.slice(1);
         await generateExcelFileByParam(ctx, type);
@@ -388,7 +394,18 @@ function readButtonCommands(bot){
                 await showAllFromTeam(ctx);
                 break;
             case "Товари 🗄️":
-                await ctx.scene.enter('addProduct');
+                await ctx.reply('Оберіть дію із якою ви бажаєте взаємодіяти із товарами', {
+                    reply_markup:{
+                        inline_keyboard:[
+                            [
+                                {text: "Додати товар", callback_data: "add_product"},
+                            ],
+                            [
+                                {text: "Додати заклад", callback_data: "add_shop"},
+                            ]
+                        ]
+                    }
+                });
                 break;
             case "Хочу в команду 🙋":
                 let Users = new User();
