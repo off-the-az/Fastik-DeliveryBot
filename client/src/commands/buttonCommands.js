@@ -32,7 +32,7 @@ function getShopsKeyboard() {
 }
 
 function getRestsKeyboard() {
-    const keyboard = restList.map(shop => shop.name);
+    const keyboard = restList.shops.map(shop => shop.name);
     return Telegraf.Markup.keyboard(keyboard).resize();
 }
 
@@ -44,8 +44,8 @@ function readCommandsButton(bot){
         ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, "shop"));
     });
 
-    bot.hears(restList.map(shop => shop.name), (ctx) => {
-        const shop = restList.find(shop => shop.name === ctx.message.text);
+    bot.hears(restList.shops.map(shop => shop.name), (ctx) => {
+        const shop = restList.shops.find(shop => shop.name === ctx.message.text);
         ctx.session.shop = shop;
         ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, "rest"));
     });
