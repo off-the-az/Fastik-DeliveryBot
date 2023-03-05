@@ -388,7 +388,7 @@ function readButtonCommands(bot){
                 await showAllFromTeam(ctx);
                 break;
             case "Товари 🗄️":
-                await ctx.reply('In progress');
+                await ctx.scene.enter('addProduct');
                 break;
             case "Хочу в команду 🙋":
                 let Users = new User();

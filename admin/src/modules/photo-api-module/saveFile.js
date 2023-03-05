@@ -1,3 +1,4 @@
+const { default: axios } = require('axios');
 const fs = require('fs');
 
 //const fileUrl = await ctx.telegram.getFileLink(photo.file_id);

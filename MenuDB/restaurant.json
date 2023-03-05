@@ -1,0 +1,39 @@
+{"shops":[
+    {
+        "id": 1,
+        "name": "Osama",
+        "products": [
+            {
+                "id": 1,
+                "name": "Роли філадельфія класичні",
+                "photo": "/root/Fastik-DeliveryBot/MenuDB/assets/filadelfia.jpg",
+                "price": 160
+            },
+            {
+                "id": 2,
+                "name": "Роли Інь-янь",
+                "photo": "/root/Fastik-DeliveryBot/MenuDB/assets/osaka.jpg",
+                "price": 188
+            }
+
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Classic",
+        "products": [
+            {
+                "id": 1,
+                "name": "Роли філадельфія класичні",
+                "photo": "/root/Fastik-DeliveryBot/MenuDB/assets/filadelfia.jpg",
+                "price": 160
+            },
+            {
+                "id": 2,
+                "name": "Роли Інь-янь",
+                "photo": "/root/Fastik-DeliveryBot/MenuDB/assets/osaka.jpg",
+                "price": 188
+            }
+        ]
+    }
+]}
