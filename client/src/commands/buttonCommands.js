@@ -1,7 +1,7 @@
 const Telegraf = require('telegraf');
 const {menu_btn,rest_menu_btn,shop_menu_btn,tomain_inline_btn,busket_menu_btn,} = require('../models/buttons');
-const shopList = require('../models/shops');
-const restList = require('../models/rest');
+const shopList = require('../../../MenuDB/shops.json');
+const restList = require('../../../MenuDB/restaurant.json');
 const {User, Ticket} = require('../api/controller/index');
 const {getAdress} = require('./inputCommands');
 const cmdList = require('../models/cmd.list.json');
