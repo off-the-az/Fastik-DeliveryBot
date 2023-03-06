@@ -30,9 +30,9 @@ function getProductsKeyboard(shopArray, type) {
 function readCommandsAction(bot){
 
     bot.hears('pay_now', async ctx => {
-        await new User().updateUser(ctx.chat.id, {payMethod: 'Оплатити зараз'});
+        //await new User().updateUser(ctx.chat.id, {payMethod: 'Оплатити зараз'});
         await ctx.reply('Для того щоби оплатити зараз дане замовлення потрібно зробити переказ на карту за даним реквізитом - ' + Number(paymethod.card_number));
-        await ctx.scene.leave('setNumber');
+        //await ctx.scene.leave('setNumber');
         /*const [paymethod] = ctx.match.slice(1);
         console.log(paymethod);
         let controller = new User();
