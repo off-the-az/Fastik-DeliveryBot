@@ -122,7 +122,7 @@ function readCommandsAction(bot){
             const item = shop.products.find(products => products.id === Number(item_id))
             if(basket.length != 0){
                 if(basket[0].from != shop.name){
-                    await ctx.reply(`Ти можеш замовляти товари виключно в '${basket[0].from}'`, {reply_markup: menu_btn});
+                    await ctx.reply(`Ти можеш замовляти товари виключно в закладі '${basket[0].from}'\nОднак ти можеш очистити кошик і оформити заново дане замовлення або оформити замовлення із тим набором товарів котрі ти додав раніше 😉`, {reply_markup: menu_btn});
                 }else{
                     basket.push(
                         {
