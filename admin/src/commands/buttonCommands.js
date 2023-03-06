@@ -144,6 +144,16 @@ function readButtonCommands(bot){
             axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
                 chat_id: `${ctx.state.user_arr[1]}`,
                 text: 'Замовлення успішно доставлено ✅\nЯкщо маєш хвильку часу - хотіли би отримати від тебе відгук😌',
+                reply_markup : {
+                    inline_keyboard : [
+                        [
+                            {
+                                text : "Залишити відгук",
+                                url : "send_comment"
+                            }
+                        ]
+                    ]
+               }
             })
             .then((response) => {
                 console.log('Message sent:', response.data);
