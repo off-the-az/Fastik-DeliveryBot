@@ -160,7 +160,7 @@ function readCommandsAction(bot){
             });
             const raw = {
                 'Унікальний номер чеку': ticket._id,
-                'Покупець': ticket.owner,
+                'Покупець': user.client_name,
                 'Кошик': string_busket,
                 'Заклад': ticket.from,
                 'Адреса доставки': ticket.adress,
