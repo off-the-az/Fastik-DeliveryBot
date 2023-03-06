@@ -102,31 +102,31 @@ function readCommandsButton(bot){
                     break;
                 case "Оформити замовлення 📝":
                     controller = new User();
-                    user = await controller.getByUsername(ctx.chat.id);
-                    if(user.busket.length === 0){
+                    let user_info = await controller.getByUsername(ctx.chat.id);
+                    if(user_info.busket.length === 0){
                         await ctx.reply( 'Спочатку склади все в кошик або відправ фото\скрін списку продуктів, які потрібно привезти😌', {reply_markup:menu_btn})
-                    }else if(user.adress === ""){
+                    }else if(user_info.adress === ""){
                         await ctx.reply( 'Перед тим як я оформлю твоє замовлення вкажи свою адресу куди саме потрібно все доставити за прикладом - вул. Симоненка буд 2 кв 41 😉')
                         await getAdress(bot);
-                    }else if(user.pnumber === ""){
+                    }else if(user_info.pnumber === ""){
                         await ctx.scene.enter('setNumber');
-                    }else if(user.client_name === ""){
+                    }else if(user_info.client_name === ""){
                         await ctx.scene.enter('setName');
-                    }else if(user.payMethod === ""){
+                    }else if(user_info.payMethod === ""){
                         await ctx.scene.enter('setpaymethod');
                     }else{
                         let itemList = "";
                         let i = 0;
-                        user.busket.forEach(el => {
+                        user_info.busket.forEach(el => {
                             itemList += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
                         })
                         if(itemList != ""){
                             await ctx.reply( 'Оформляю твоє замовлення')
                             await ctx.reply( 'Твої персональні дані:')
-                            await ctx.reply(`Власник: ${user.client_name}\nАдреса доставки: ${user.adress}`)
+                            await ctx.reply(`Власник: ${user_info.client_name}\nАдреса доставки: ${user_info.adress}`)
                             await ctx.reply( 'Твій кошик виглядає ось так:')
                             await ctx.reply( `${itemList}`)
-                            await ctx.reply( `До сплати: ${countSum(user.busket)} грн💸`)
+                            await ctx.reply( `До сплати: ${countSum(user_info.busket)} грн💸`)
                             await ctx.reply( 'Якщо все вірно, натисни "Продовжити ▶️" і замовлення буде оформлено😉\nУ разі якщо адресу вказав неправильно - натисни "Змінити адресу 🔄" аби змінити адресу доставки😌', {
                                 reply_markup: {
                                     inline_keyboard:[
