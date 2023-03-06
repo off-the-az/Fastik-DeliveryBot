@@ -272,6 +272,7 @@ function readCommandsAction(bot){
 
     bot.action(/get_(.+)_(.+)_(.+)/, async (ctx) => {
         const [list, shop_id, item_id] = await ctx.match.slice(1);
+        await ctx.deleteMessage()
         console.log(`get_${list}_${shop_id}_${item_id}`);
         await ctx.deleteMessage();
         if(list === "shop"){
