@@ -29,6 +29,22 @@ function getProductsKeyboard(shopArray, type) {
 
 function readCommandsAction(bot){
 
+    bot.hears('pay_now', async ctx => {
+        await controller.updateUser(ctx.chat.id, {payMethod: 'Оплатити зараз'});
+        await ctx.reply('Для того щоби оплатити зараз дане замовлення потрібно зробити переказ на карту за даним реквізитом - ' + Number(paymethod.card_number));
+        await ctx.scene.leave('setNumber');
+        /*const [paymethod] = ctx.match.slice(1);
+        console.log(paymethod);
+        let controller = new User();
+        if(String(paymethod) === 'now'){
+            
+        }else if(String(paymethod) === 'later'){
+            await controller.updateUser(ctx.chat.id, {payMethod: 'Оплата кур’єру'});
+            await ctx.reply('Замовлення успішно оформлено! Очікуй інформації про замовлення!)');
+            await ctx.scene.leave('setNumber');
+        }*/
+    })
+
     bot.action('cont_reg', async (ctx) => {
         let Users = new User();
         let user = await Users.getByUsername(ctx.chat.id);
@@ -131,7 +147,17 @@ function readCommandsAction(bot){
         }else if(user.client_name === ""){
             await ctx.scene.enter('setName');
         }else if(user.payMethod === ""){
-            await ctx.scene.enter('setpaymethod');
+            await ctx.reply('Обери спосіб оплати, через який ти будеш розраховуватись за замовлення. Усі варіанти вказано в нижній панелі під полем де ти вносиш повідомлення', {reply_markup:{
+                inline_keyboard: [
+                    [
+                        {text: 'Оплатити зараз', callback_data: 'pay_now'}
+                    ],
+                    [
+                        {text: 'Оплата кур’єру', callback_data: 'pay_later'}
+                    ]
+                ],
+                resize_keyboard: true,
+            }});
         }else{
             await doc.useServiceAccountAuth(creds);
             let string_busket = ""
