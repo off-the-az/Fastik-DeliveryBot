@@ -9,17 +9,17 @@ setPayTypeScene.enter(async ctx => {
     await ctx.reply('Обери спосіб оплати, через який ти будеш розраховуватись за замовлення. Усі варіанти вказано в нижній панелі під полем де ти вносиш повідомлення', {reply_markup:{
         inline_keyboard: [
             [
-                {text: 'Оплатити зараз', callback_data: 'now'}
+                {text: 'Оплатити зараз', callback_data: 'pay_now'}
             ],
             [
-                {text: 'Оплата кур’єру', callback_data: 'later'}
+                {text: 'Оплата кур’єру', callback_data: 'pay_later'}
             ]
         ],
         resize_keyboard: true,
     }});
 })
 
-setPayTypeScene.hears(/(.+)/, async ctx => {
+setPayTypeScene.hears(/pay_(.+)/, async ctx => {
     const [paymethod] = ctx.match.slice(1);
     let controller = new User();
     if(String(paymethod) === 'now'){
