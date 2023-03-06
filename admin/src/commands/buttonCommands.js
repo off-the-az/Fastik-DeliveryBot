@@ -214,9 +214,11 @@ function readButtonCommands(bot){
             --numberOfTicketInList;
         }
         list = "";
-        let Tickets = new Ticket();
         data = await Tickets.getAllByStatus(1)
-        userTickets = data.filter(ticket => ticket.courier === ctx.chat.id);
+        let Users = new User();
+        let user = await Users.getByUsername(ctx.chat.id);
+        console.log(user.name+"("+user.client_name+")");
+        userTickets = data.filter(ticket => ticket.courier === user.name+"("+user.client_name+")");
         if(userTickets.length != 0){
             let i = 0;
             list = "";
@@ -257,7 +259,10 @@ function readButtonCommands(bot){
         list = "";
         let Tickets = new Ticket();
         data = await Tickets.getAllByStatus(1)
-        userTickets = data.filter(ticket => ticket.courier === ctx.chat.id);
+        let Users = new User();
+        let user = await Users.getByUsername(ctx.chat.id);
+        console.log(user.name+"("+user.client_name+")");
+        userTickets = data.filter(ticket => ticket.courier === user.name+"("+user.client_name+")");
         if(userTickets.length != 0){
             let i = 0;
             userTickets[numberOfTicketInList].itemlist.forEach(el => {
