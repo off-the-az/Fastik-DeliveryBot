@@ -99,7 +99,7 @@ function readButtonCommands(bot){
             console.log(user_data);
             ctx.state.user_arr = user_data.split(' / ');
             console.log(ctx.state.user_arr);
-            /*axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
+            axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
                 chat_id: `${ctx.state.user_arr[1]}`,
                 text: 'Статус твого замовлення оновлено!) Переглянути детальніше інформацію можна в історії твоїх замовлень!)',
             })
@@ -108,11 +108,9 @@ function readButtonCommands(bot){
             })
             .catch(err => {
                 throw err;
-            })*/
+            })
         } catch (error) {
-            console.log('====================================');
             console.error(`Error while finishing order. Error: ${error}`);
-            console.log('====================================');
         }
     })
     bot.action(/finish_delivery_(.+)/, async (ctx) => {
@@ -137,9 +135,7 @@ function readButtonCommands(bot){
             await rowToUpdate.save();
             await ctx.reply('Замовлення успішно доставлено ✅\nТак тримати, колего!😌', {reply_markup: courier_menu_btn});
         } catch (error) {
-            console.log('====================================');
-            console.log(`Error while finishing order. Error: ${error}`);
-            console.log('====================================');
+            console.error(`Error while finishing order. Error: ${error}`);
         }
     })
     bot.action('previous', async (ctx) => {
