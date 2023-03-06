@@ -1,7 +1,7 @@
 const { Scenes } =  require("telegraf");
 const {menu_btn} = require('../models/buttons');
 const {User} = require('../api/controller/index');
-const paymethod = require('../../../MenuDB/paymethod.json')
+const pay_method = require('../../../MenuDB/paymethod.json')
 
 const setPayTypeScene = new Scenes.BaseScene('setpaymethod');
 
@@ -25,7 +25,7 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
     let controller = new User();
     if(String(paymethod) === 'now'){
         await controller.updateUser(ctx.chat.id, {payMethod: 'Оплатити зараз'});
-        await ctx.reply('Для того щоби оплатити зараз дане замовлення потрібно зробити переказ на карту за даним реквізитом - ' + Number(paymethod.card_number));
+        await ctx.reply('Для того щоби оплатити зараз дане замовлення потрібно зробити переказ на карту за даним реквізитом - ' + pay_method.card_number);
         await ctx.scene.leave('setNumber');
     }else if(String(paymethod) === 'later'){
         await controller.updateUser(ctx.chat.id, {payMethod: 'Оплата кур’єру'});
