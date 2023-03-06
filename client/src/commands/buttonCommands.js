@@ -27,27 +27,32 @@ function getProductsKeyboard(shopArray, type) {
 }
 
 function getShopsKeyboard() {
-    const keyboard = shopList.shops.map(shop => shop.name);
-    return Telegraf.Markup.keyboard(keyboard).resize();
+    return Telegraf.Markup.inlineKeyboard(
+        shopList.shops.map((item) => {
+            return [Telegraf.Markup.button.callback(`${item.name} - ${item.price} грн.`, `get_products_shop_${item.id}`)];
+        })
+    );
 }
 
 function getRestsKeyboard() {
-    const keyboard = restList.shops.map(shop => shop.name);
-    return Telegraf.Markup.keyboard(keyboard).resize();
+    return Telegraf.Markup.inlineKeyboard(
+        restList.shops.map((item) => {
+            return [Telegraf.Markup.button.callback(`${item.name} - ${item.price} грн.`, `get_products_rest_${item.id}`)];
+        })
+    );
 }
 
 function readCommandsButton(bot){
 
-    bot.hears(shopList.shops.map(shop => shop.name), (ctx) => {
-        const shop = shopList.shops.find(shop => shop.name === ctx.message.text);
-        ctx.session.shop = shop;
-        ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, "shop"));
-    });
-
-    bot.hears(restList.shops.map(shop => shop.name), (ctx) => {
-        const shop = restList.shops.find(shop => shop.name === ctx.message.text);
-        ctx.session.shop = shop;
-        ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, "rest"));
+    bot.action(/get_products_(.+)_(.+)/, (ctx) => {
+        const [type, id] = ctx.match.slice(1);
+        if(type === "shop"){
+            const shop = shopList.shops.find(shop => shop.id === id);
+            ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, type));
+        }else if(type === "rest"){
+            const shop = restList.shops.find(shop => shop.id === id);
+            ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, type));
+        }
     });
 
     bot.hears(cmdList.buttons.map(button => button.name), async ctx => {
@@ -56,12 +61,10 @@ function readCommandsButton(bot){
         try {
             switch (ctx.update.message.text) {
                 case 'Ресторани 🍽️':
-                    await ctx.reply( 'Обери заклад харчування у якому ти хочеш замовити. Список закладів у тебе відображаються в нижній частині екрану', getRestsKeyboard())
-                    await ctx.reply( 'У разі якщо не бажаєш обирати заклад, ти можеш натиснути кнопку \'Головна🚪\', котра знаходиться під даним повідомленням', {reply_markup:tomain_inline_btn})
+                    await ctx.reply( 'Обери заклад харчування у якому ти хочеш замовити. Список закладів у тебе відображаються під даним повідомленням', getRestsKeyboard())
                     break;
                 case 'Магазини 🏪':
-                    await ctx.reply( 'Обери магазин у якому ти хочеш замовити. Список магазинів у тебе відображаються в нижній частині екрану', getShopsKeyboard())
-                    await ctx.reply( 'У разі якщо не бажаєш обирати магазин, ти можеш натиснути кнопку \'Головна🚪\', котра знаходиться під даним повідомленням', {reply_markup:tomain_inline_btn})
+                    await ctx.reply( 'Обери магазин у якому ти хочеш замовити. Список магазинів у тебе відображаються під даним повідомленням', getShopsKeyboard())
                     break;
                 case 'Кошик 🧺':
                     controller = new User();
