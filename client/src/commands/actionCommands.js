@@ -249,6 +249,10 @@ function readCommandsAction(bot){
         if(ticket.status != 2){
             await ctx.reply('Дане замовлення поки що не доставлене!');
         }
+        else{
+            ctx.state.ticket = ticket_id;
+            await ctx.scene.enter('setCommentary');
+        }
     })
 }
 
