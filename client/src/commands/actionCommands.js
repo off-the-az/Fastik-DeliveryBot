@@ -142,7 +142,7 @@ function readCommandsAction(bot){
             let date = new Date();
             let result = await Tickets.addTicket({
                 itemlist: user.busket,
-                owner: user.client_name,
+                owner: user.client_name + ' / ' + ctx.chat.id,
                 adress: user.adress,
                 pnumber: user.pnumber,
                 tPrice: countSum(user.busket),
