@@ -103,7 +103,7 @@ function readButtonCommands(bot){
                 ctx.state.user_arr.push(tup[1]);
             })
             console.log(ctx.state.user_arr);
-            axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
+            /*axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
                 chat_id: `${ctx.state.user_arr[1]}`,
                 text: 'Статус твого замовлення оновлено!) Переглянути детальніше інформацію можна в історії твоїх замовлень!)',
             })
@@ -112,7 +112,7 @@ function readButtonCommands(bot){
             })
             .catch(err => {
                 throw err;
-            })
+            })*/
         } catch (error) {
             console.log('====================================');
             console.error(`Error while finishing order. Error: ${error}`);
