@@ -241,6 +241,14 @@ function readCommandsAction(bot){
             );
         }
     })
+    bot.action(/send_comment_(.+)/, async (ctx) => {
+        const [ticket_id] = ctx.match.slice(1);
+        let Tickets = new Ticket();
+        let ticket = await Tickets.getById(ticket_id);
+        if(ticket.status != 2){
+            await ctx.reply('Дане замовлення поки що не доставлене!');
+        }
+    })
 }
 
 module.exports = readCommandsAction;
