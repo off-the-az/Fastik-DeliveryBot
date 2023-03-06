@@ -20,7 +20,7 @@ initItemInBasketScene.hears(/(.+)/, async ctx => {
     let controller = new User();
     let data = await controller.getByUsername(ctx.chat.id);
     let busket = data.busket;
-    if(info != 'cancel'){
+    if(String(info) != 'cancel'){
         busket.forEach(item => {
             if(item.amount === 0){
                 item.amount = isNaN(Number(info)) != true ? Number(info) : 1
@@ -29,7 +29,7 @@ initItemInBasketScene.hears(/(.+)/, async ctx => {
         await controller.updateUser(ctx.chat.id, {busket: busket});
         await ctx.reply( 'Інформацію оновлено успішно✅\nМожеш обрати щось іще додатково аби наповнити свій кошик новими товарами😊\nА якщо бажаєш оформити своє замовлення - натисни `Оформити📝` і оформлюй замовлення😉', {reply_markup:menu_btn});
         ctx.scene.leave('initBasket');
-    }else{
+    }else if(String(info) === 'cancel'){
         await ctx.reply('Скасовано 😕❌', {reply_markup: menu_btn});
     }
 })
