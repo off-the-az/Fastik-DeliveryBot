@@ -30,7 +30,9 @@ setCommentaryScene.on('text', async ctx => {
         rowToUpdate._rawData[11] = ctx.message.text;
         console.log(rowToUpdate._rawData);
         await rowToUpdate.save();
-        await controller.updateTicket(ctx.state.ticket, {commentary: isNaN(Number(ctx.update.message.text)) != true ? Number(ctx.update.message.text) : 0});
+        let commentary_num = isNaN(Number(ctx.update.message.text)) != true ? Number(ctx.update.message.text) : 0;
+        console.log(commentary_num);
+        await controller.updateTicket(ctx.state.ticket, {commentary: commentary_num});
         await ctx.reply( 'Відгук надіслано успішно✅\nСподіваюсь тобі сподобався наш сервіс😉', {reply_markup:menu_btn});
         ctx.scene.leave('setCommentary');
     }
