@@ -151,7 +151,7 @@ function readCommandsButton(bot){
                     let user = await Users.getByUsername(ctx.chat.id);
                     userTickets = await tickets.getByUsername(`${user.client_name} / ${ctx.chat.id}`);
                     list = "";
-                    if(userTickets.length != 0){
+                    if(userTickets.length != 0 || userTickets === undefined){
                         let i = 0;
                         userTickets[numberOfTicketInList].itemlist.forEach(el => {
                             list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
