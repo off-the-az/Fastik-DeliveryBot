@@ -147,7 +147,9 @@ function readCommandsButton(bot){
                     break;
                 case 'Історія покупок 📒':
                     let tickets = new Ticket();
-                    userTickets = await tickets.getByUsername(`@${ctx.chat.id}%20(${ctx.chat.first_name}%20${ctx.chat.last_name != undefined ? ctx.chat.last_name : '\b'})`);
+                    let Users = new User();
+                    let user = await Users.getByUsername(ctx.chat.id);
+                    userTickets = await tickets.getByUsername(`${user.client_name} / ${ctx.chat.id}`);
                     list = "";
                     if(userTickets.length != 0){
                         let i = 0;
