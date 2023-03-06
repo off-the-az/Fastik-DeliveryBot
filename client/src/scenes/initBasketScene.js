@@ -6,19 +6,7 @@ const cmdList = require('../models/cmd.list.json');
 const initItemInBasketScene = new Scenes.BaseScene('initBasket');
 
 initItemInBasketScene.enter(async ctx => {
-    await ctx.reply( 'Вкажи в якій кількості ти хочеш замовити', {reply_markup:{
-        inline_keyboard: [
-            [
-                {text: 'Скасувати ❌', callback_data: 'cancel'}
-            ]
-        ],
-        resize_keyboard: true,
-    }});
-})
-
-initItemInBasketScene.hears('cancel', async ctx => {
-    await ctx.reply('Скасовано 😕❌', {reply_markup: menu_btn});
-    ctx.scene.leave('initBasket');
+    await ctx.reply( 'Вкажи в якій кількості ти хочеш замовити');
 })
 
 initItemInBasketScene.on('text', async ctx => {
