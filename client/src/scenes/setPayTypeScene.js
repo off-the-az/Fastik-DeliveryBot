@@ -29,7 +29,15 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
         await ctx.scene.leave('setNumber');
     }else if(String(paymethod) === 'later'){
         await controller.updateUser(ctx.chat.id, {payMethod: 'Оплата кур’єру'});
-        await ctx.reply('Замовлення успішно оформлено! Очікуй інформації про замовлення!)');
+        await ctx.reply('Дані успішно оновлено! Завершуй оформлення замовлення, натиснувши ʼПродовжитиʼ!)', {
+            reply_markup: {
+                inline_keyboard:[
+                    [
+                        {text: 'Продовжити', callback_data: 'finish_order'}
+                    ]
+                ]
+            }
+        });
         await ctx.scene.leave('setNumber');
     }
 })
