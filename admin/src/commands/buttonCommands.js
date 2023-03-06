@@ -93,8 +93,12 @@ function readButtonCommands(bot){
             //await Tickets.updateTicket(ticket_id, {courier: user.name + "(" + user.client_name + ")", status: 1});
             //await ctx.reply('Замовлення успішно присвоєно тобі ✅\nЩоби переглянути інформацію про замовлення, котрі ти взяв - натисни ʼМої замовлення 📒ʼ\n\nПотрібно доставити як найшвидше!\nНе змушуй клієнта тебе лаяти😌', {reply_markup: courier_menu_btn});
             ctx.state.user_arr = [];
-            let user_data = await Tickets.getById(ticket_id).owner;
+            let UserInfo = await Tickets.getById(ticket_id);
+            console.log(UserInfo);
+            let user_data = UserInfo.owner;
+            console.log(user_data);
             let user_split_arr = user_data.split(' / ');
+            console.log(user_split_arr);
             user_split_arr.forEach(tup => {
                 ctx.state.user_arr.push(tup[1]);
             })
