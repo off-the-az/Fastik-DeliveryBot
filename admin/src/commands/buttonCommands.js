@@ -97,11 +97,7 @@ function readButtonCommands(bot){
             console.log(UserInfo);
             let user_data = UserInfo.owner;
             console.log(user_data);
-            let user_split_arr = user_data.split(' / ');
-            console.log(user_split_arr);
-            user_split_arr.forEach(tup => {
-                ctx.state.user_arr.push(tup[1]);
-            })
+            ctx.state.user_arr = user_data.split(' / ');
             console.log(ctx.state.user_arr);
             /*axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
                 chat_id: `${ctx.state.user_arr[1]}`,
