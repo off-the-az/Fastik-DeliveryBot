@@ -3,6 +3,7 @@ const {menu_btn} = require('../models/buttons');
 const {Ticket} = require('../api/controller/index');
 const cmdList = require('../models/cmd.list.json');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
+const creds = require('../models/fastik-gsheet.json');
 
 const doc = new GoogleSpreadsheet("1RT3cT9YWAlAX0QMIxx8XIVJ2SRz8CqsHSVdhrKxK2vU");
 
