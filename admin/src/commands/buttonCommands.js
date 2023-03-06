@@ -214,6 +214,7 @@ function readButtonCommands(bot){
             --numberOfTicketInList;
         }
         list = "";
+        let Tickets = new Ticket();
         data = await Tickets.getAllByStatus(1)
         let Users = new User();
         let user = await Users.getByUsername(ctx.chat.id);
