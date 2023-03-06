@@ -101,6 +101,7 @@ function readCommandsAction(bot){
                 'Дата замовлення': ticket.date,
                 'Кур\'єр': ticket.courier,
                 'Статус': 'Складаємо замовлення',
+                'Оцінка': 0,
             };
             await doc.loadInfo();
             const sheet = doc.sheetsById[434269134];
