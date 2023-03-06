@@ -47,16 +47,16 @@ function readCommandsAction(bot){
 
     bot.action('previous', async (ctx) => {
         await ctx.deleteMessage();
+        let tickets = new Ticket();
+        let Users = new User();
+        let user = await Users.getByUsername(ctx.chat.id);
+        let userTickets = await tickets.getByUsername(`${user.client_name}%20-%20${ctx.chat.id}`);
         if(numberOfTicketInList+1 < 1){
             numberOfTicketInList = 0;
         }else{
             --numberOfTicketInList;
         }
         list = "";
-        let tickets = new Ticket();
-        let Users = new User();
-        let user = await Users.getByUsername(ctx.chat.id);
-        let userTickets = await tickets.getByUsername(`${user.client_name}%20-%20${ctx.chat.id}`);
         list = "";
         if(userTickets.length != 0 || userTickets === undefined){
             let i = 0;
@@ -92,14 +92,14 @@ function readCommandsAction(bot){
     });
     bot.action('next', async (ctx) => {
         await ctx.deleteMessage();
-        if(userTickets.length <= numberOfTicketInList+1){
-            numberOfTicketInList = userTickets.length - 1;
-        }else ++numberOfTicketInList;
-        list = "";
         let tickets = new Ticket();
         let Users = new User();
         let user = await Users.getByUsername(ctx.chat.id);
         let userTickets = await tickets.getByUsername(`${user.client_name}%20-%20${ctx.chat.id}`);
+        if(userTickets.length <= numberOfTicketInList+1){
+            numberOfTicketInList = userTickets.length - 1;
+        }else ++numberOfTicketInList;
+        list = "";
         list = "";
         if(userTickets.length != 0 || userTickets === undefined){
             let i = 0;
