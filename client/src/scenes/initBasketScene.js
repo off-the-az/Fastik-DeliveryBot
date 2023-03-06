@@ -20,7 +20,7 @@ initItemInBasketScene.hears(/(.+)/, async ctx => {
     let controller = new User();
     let data = await controller.getByUsername(ctx.chat.id);
     let busket = data.busket;
-    if(String(info) != 'cancel'){
+    if(info != 'cancel'){
         busket.forEach(item => {
             if(item.amount === 0){
                 item.amount = isNaN(Number(info)) != true ? Number(info) : 1
