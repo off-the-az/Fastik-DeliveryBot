@@ -9,15 +9,16 @@ initItemInBasketScene.enter(async ctx => {
     await ctx.reply( 'Вкажи в якій кількості ти хочеш замовити');
 })
 
-initItemInBasketScene.on('text', async ctx => {
+initItemInBasketScene.on(/(.+)/, async ctx => {
+    const [amount] = ctx.match.slice(1);
     let controller = new User();
     let data = await controller.getByUsername(ctx.chat.id);
     let busket = data.busket;
     console.log(Number(ctx.update.message.text));
-    if(ctx.update.message.text != cmdList.buttons.map(button => button.name)){
+    if(amount != cmdList.buttons.map(button => button.name)){
         busket.forEach(item => {
             if(item.amount === 0){
-                item.amount = isNaN(Number(ctx.update.message.text)) != true ? Number(ctx.update.message.text) : 1
+                item.amount = isNaN(Number(amount)) != true ? Number(amount) : 1
             }
         });
         await controller.updateUser(ctx.chat.id, {busket: busket});
