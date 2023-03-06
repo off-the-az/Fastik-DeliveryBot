@@ -113,17 +113,7 @@ function readCommandsButton(bot){
                     }else if(user.client_name === ""){
                         await ctx.scene.enter('setName');
                     }else if(user.payMethod === ""){
-                        await ctx.reply('Обери спосіб оплати, через який ти будеш розраховуватись за замовлення. Усі варіанти вказано в нижній панелі під полем де ти вносиш повідомлення', {reply_markup:{
-                            inline_keyboard: [
-                                [
-                                    {text: 'Оплатити зараз', callback_data: 'pay_now'}
-                                ],
-                                [
-                                    {text: 'Оплата кур’єру', callback_data: 'pay_later'}
-                                ]
-                            ],
-                            resize_keyboard: true,
-                        }});
+                        await ctx.scene.enter('setpaymethod');
                     }else{
                         let itemList = "";
                         let i = 0;

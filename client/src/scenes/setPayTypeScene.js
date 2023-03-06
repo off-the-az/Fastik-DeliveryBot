@@ -19,20 +19,19 @@ setPayTypeScene.enter(async ctx => {
     }});
 })
 
-setPayTypeScene.hears('pay_now', async ctx => {
-    await controller.updateUser(ctx.chat.id, {payMethod: 'Оплатити зараз'});
-    await ctx.reply('Для того щоби оплатити зараз дане замовлення потрібно зробити переказ на карту за даним реквізитом - ' + Number(paymethod.card_number));
-    await ctx.scene.leave('setNumber');
-    /*const [paymethod] = ctx.match.slice(1);
+setPayTypeScene.action(/pay_(.+)/, async ctx => {
+    const [paymethod] = ctx.match.slice(1);
     console.log(paymethod);
     let controller = new User();
     if(String(paymethod) === 'now'){
-        
+        await controller.updateUser(ctx.chat.id, {payMethod: 'Оплатити зараз'});
+        await ctx.reply('Для того щоби оплатити зараз дане замовлення потрібно зробити переказ на карту за даним реквізитом - ' + Number(paymethod.card_number));
+        await ctx.scene.leave('setNumber');
     }else if(String(paymethod) === 'later'){
         await controller.updateUser(ctx.chat.id, {payMethod: 'Оплата кур’єру'});
         await ctx.reply('Замовлення успішно оформлено! Очікуй інформації про замовлення!)');
         await ctx.scene.leave('setNumber');
-    }*/
+    }
 })
 
 setPayTypeScene.leave(async ctx => {
