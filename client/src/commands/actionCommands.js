@@ -169,7 +169,7 @@ function readCommandsAction(bot){
                 'Спосіб оплати': ticket.payMethod,
                 'Дата замовлення': ticket.date,
                 'Кур\'єр': ticket.courier,
-                'Статус': 'В обробці',
+                'Статус': 'Складаємо замовлення',
             };
             await doc.loadInfo();
             const sheet = doc.sheetsById[434269134];
