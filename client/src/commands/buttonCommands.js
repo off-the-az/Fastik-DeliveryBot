@@ -29,7 +29,7 @@ function getProductsKeyboard(shopArray, type) {
 function getShopsKeyboard() {
     return Telegraf.Markup.inlineKeyboard(
         shopList.shops.map((item) => {
-            return [Telegraf.Markup.button.callback(`${item.name} - ${item.price} грн.`, `get_products_shop_${item.id}`)];
+            return [Telegraf.Markup.button.callback(`${item.name}`, `get_products_shop_${item.id}`)];
         })
     );
 }
@@ -37,7 +37,7 @@ function getShopsKeyboard() {
 function getRestsKeyboard() {
     return Telegraf.Markup.inlineKeyboard(
         restList.shops.map((item) => {
-            return [Telegraf.Markup.button.callback(`${item.name} - ${item.price} грн.`, `get_products_rest_${item.id}`)];
+            return [Telegraf.Markup.button.callback(`${item.name}`, `get_products_rest_${item.id}`)];
         })
     );
 }
@@ -48,9 +48,11 @@ function readCommandsButton(bot){
         const [type, id] = ctx.match.slice(1);
         if(type === "shop"){
             const shop = shopList.shops.find(shop => shop.id === id);
+            console.log(shop);
             ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, type));
         }else if(type === "rest"){
             const shop = restList.shops.find(shop => shop.id === id);
+            console.log(shop);
             ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, type));
         }
     });
