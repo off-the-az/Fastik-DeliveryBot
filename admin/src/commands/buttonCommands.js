@@ -149,7 +149,7 @@ function readButtonCommands(bot){
                         [
                             {
                                 text : "Залишити відгук",
-                                callback_data : "send_comment"
+                                callback_data : `send_comment_${ticket_id}`
                             }
                         ]
                     ]
