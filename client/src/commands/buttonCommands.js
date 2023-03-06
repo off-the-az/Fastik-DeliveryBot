@@ -56,6 +56,94 @@ function readCommandsButton(bot){
             ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, type));
         }
     });
+    bot.action('previous', async (ctx) => {
+        await ctx.deleteMessage();
+        let tickets = new Ticket();
+        let Users = new User();
+        let user = await Users.getByUsername(ctx.chat.id);
+        let userTickets = await tickets.getByUsername(`${user.client_name}%20-%20${ctx.chat.id}`);
+        if(numberOfTicketInList+1 < 1){
+            numberOfTicketInList = 0;
+        }else{
+            --numberOfTicketInList;
+        }
+        list = "";
+        list = "";
+        if(userTickets.length != 0 || userTickets === undefined){
+            let i = 0;
+            userTickets[numberOfTicketInList].itemlist.forEach(el => {
+                list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
+            })
+            let courier = "";
+            if(userTickets[numberOfTicketInList].courier != ""){
+                let cour_arr = userTickets[numberOfTicketInList].courier.split('(');
+                let final_res = cour_arr[1].split(')')
+                courier = final_res[0];
+            }else{
+                courier = "В очікуванні на кур'єра ⌛"
+            }
+            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${courier}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+                {
+                    reply_markup: {
+                        inline_keyboard: numberOfTicketInList != 0 ? [
+                            [
+                                {text: "◀️", callback_data: "previous"},
+                                {text: "▶️", callback_data: "next"}
+                            ]
+                        ] : [
+                            [
+                                {text: "▶️", callback_data: "next"}
+                            ]
+                        ],
+                        resize_keyboard: true
+                    }
+                }
+            );
+        }
+    });
+    bot.action('next', async (ctx) => {
+        await ctx.deleteMessage();
+        let tickets = new Ticket();
+        let Users = new User();
+        let user = await Users.getByUsername(ctx.chat.id);
+        let userTickets = await tickets.getByUsername(`${user.client_name}%20-%20${ctx.chat.id}`);
+        if(userTickets.length <= numberOfTicketInList+1){
+            numberOfTicketInList = userTickets.length - 1;
+        }else ++numberOfTicketInList;
+        list = "";
+        list = "";
+        if(userTickets.length != 0 || userTickets === undefined){
+            let i = 0;
+            userTickets[numberOfTicketInList].itemlist.forEach(el => {
+                list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
+            })
+            let courier = "";
+            if(userTickets[numberOfTicketInList].courier != ""){
+                let cour_arr = userTickets[numberOfTicketInList].courier.split('(');
+                let final_res = cour_arr[1].split(')')
+                courier = final_res[0];
+            }else{
+                courier = "В очікуванні на кур'єра ⌛"
+            }
+            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${courier}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+                {
+                    reply_markup: {
+                        inline_keyboard: numberOfTicketInList != 0 ? [
+                            [
+                                {text: "◀️", callback_data: "previous"},
+                                {text: "▶️", callback_data: "next"}
+                            ]
+                        ] : [
+                            [
+                                {text: "▶️", callback_data: "next"}
+                            ]
+                        ],
+                        resize_keyboard: true
+                    }
+                }
+            );
+        }
+    });
 
     bot.hears(cmdList.buttons.map(button => button.name), async ctx => {
         let controller;
