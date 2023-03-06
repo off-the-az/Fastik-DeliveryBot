@@ -6,22 +6,24 @@ const initItemInBasketScene = new Scenes.BaseScene('initBasket');
 
 initItemInBasketScene.enter(async ctx => {
     await ctx.reply( 'Вкажи в якій кількості ти хочеш замовити', {reply_markup:{
-        keyboard: [
-            ['Скасувати ❌']
+        inline_keyboard: [
+            [
+                {text: 'Скасувати ❌', callback_data: 'cancel'}
+            ]
         ],
         resize_keyboard: true,
     }});
 })
 
-initItemInBasketScene.on('text', async ctx => {
+initItemInBasketScene.hears(/(.+)/, async ctx => {
+    const [info] = ctx.match.slice(1);
     let controller = new User();
     let data = await controller.getByUsername(ctx.chat.id);
     let busket = data.busket;
-    console.log(Number(ctx.update.message.text));
-    if(ctx.update.message.text != 'Скасувати ❌'){
+    if(String(info) != 'cancel'){
         busket.forEach(item => {
             if(item.amount === 0){
-                item.amount = isNaN(Number(ctx.update.message.text)) != true ? Number(ctx.update.message.text) : 1
+                item.amount = isNaN(Number(info)) != true ? Number(info) : 1
             }
         });
         await controller.updateUser(ctx.chat.id, {busket: busket});
