@@ -94,11 +94,11 @@ function readButtonCommands(bot){
             //await ctx.reply('Замовлення успішно присвоєно тобі ✅\nЩоби переглянути інформацію про замовлення, котрі ти взяв - натисни ʼМої замовлення 📒ʼ\n\nПотрібно доставити як найшвидше!\nНе змушуй клієнта тебе лаяти😌', {reply_markup: courier_menu_btn});
             ctx.state.user_arr = [];
             let user_data = await Tickets.getById(ticket_id).owner;
-            console.log(ctx.state.user_arr);
-            let user_split_arr = user_arr.split(' / ');
+            let user_split_arr = user_data.split(' / ');
             user_split_arr.forEach(tup => {
                 ctx.state.user_arr.push(tup[1]);
             })
+            console.log(ctx.state.user_arr);
             axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
                 chat_id: `${ctx.state.user_arr[1]}`,
                 text: 'Статус твого замовлення оновлено!) Переглянути детальніше інформацію можна в історії твоїх замовлень!)',
