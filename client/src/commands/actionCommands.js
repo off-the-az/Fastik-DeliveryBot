@@ -148,7 +148,7 @@ function readCommandsAction(bot){
                 tPrice: countSum(user.busket),
                 from: user.busket[0].from,
                 payMethod: user.payMethod,
-                date: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${data.getHours()}:${date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()}:${date.getSeconds()}`,
+                date: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()}:${date.getSeconds()}`,
             });
             let tickets = await Tickets.getAllByStatus(0);
             let ticket;
