@@ -21,6 +21,7 @@ setPayTypeScene.enter(async ctx => {
 
 setPayTypeScene.hears(/pay_(.+)/, async ctx => {
     const [paymethod] = ctx.match.slice(1);
+    console.log(paymethod);
     let controller = new User();
     if(String(paymethod) === 'now'){
         await controller.updateUser(ctx.chat.id, {payMethod: 'Оплатити зараз'});
