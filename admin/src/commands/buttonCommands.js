@@ -1,5 +1,6 @@
 const Telegraf = require('telegraf');
 require('dotenv').config();
+const axios = require('axios');
 const cmdList = require('../models/cmd.list.json');
 const typeList = require('../models/type.excel.file.json');
 const {Ticket, User} = require('../api/controller/index');
@@ -9,7 +10,7 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { courier_menu_btn } = require('../models/buttons');
 
 const doc = new GoogleSpreadsheet("1RT3cT9YWAlAX0QMIxx8XIVJ2SRz8CqsHSVdhrKxK2vU");
-
+const bot_sender = '5986688122:AAGfiCiyNIX_2shqSolWn-LtC0owxobDPAw';
 let userTickets = [];
 let numberOfTicketInList = 0;
 let numberOfWorkerList = 0;
@@ -85,16 +86,32 @@ function readButtonCommands(bot){
                     rowToUpdate = row;
                 }
             });
-            
             rowToUpdate._rawData[10] = 'Очікує доставки';
             rowToUpdate._rawData[9] = user.name + "(" + user.client_name + ")";
             console.log(rowToUpdate._rawData);
-            await rowToUpdate.save();
-            await Tickets.updateTicket(ticket_id, {courier: user.name + "(" + user.client_name + ")", status: 1});
-            await ctx.reply('Замовлення успішно присвоєно тобі ✅\nЩоби переглянути інформацію про замовлення, котрі ти взяв - натисни ʼМої замовлення 📒ʼ\n\nПотрібно доставити як найшвидше!\nНе змушуй клієнта тебе лаяти😌', {reply_markup: courier_menu_btn});
+            //await rowToUpdate.save();
+            //await Tickets.updateTicket(ticket_id, {courier: user.name + "(" + user.client_name + ")", status: 1});
+            //await ctx.reply('Замовлення успішно присвоєно тобі ✅\nЩоби переглянути інформацію про замовлення, котрі ти взяв - натисни ʼМої замовлення 📒ʼ\n\nПотрібно доставити як найшвидше!\nНе змушуй клієнта тебе лаяти😌', {reply_markup: courier_menu_btn});
+            ctx.state.user_arr = [];
+            let user_data = await Tickets.getById(ticket_id).owner;
+            console.log(user_arr);
+            let user_split_arr = user_arr.split(' / ');
+            user_split_arr.forEach(tup => {
+                ctx.state.user_arr.push(tup[1]);
+            })
+            axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
+                chat_id: `${ctx.state.user_arr[1]}`,
+                text: 'Статус твого замовлення оновлено!) Переглянути детальніше інформацію можна в історії твоїх замовлень!)',
+            })
+            .then((response) => {
+                console.log('Message sent:', response.data);
+            })
+            .catch(err => {
+                throw err;
+            })
         } catch (error) {
             console.log('====================================');
-            console.log(`Error while finishing order. Error: ${error}`);
+            console.error(`Error while finishing order. Error: ${error}`);
             console.log('====================================');
         }
     })
