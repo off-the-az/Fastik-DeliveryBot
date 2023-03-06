@@ -149,7 +149,7 @@ function readCommandsButton(bot){
                     let tickets = new Ticket();
                     let Users = new User();
                     let user = await Users.getByUsername(ctx.chat.id);
-                    userTickets = await tickets.getByUsername(`${user.client_name}%20/%20${ctx.chat.id}`);
+                    userTickets = await tickets.getByUsername(`${user.client_name}%20-%20${ctx.chat.id}`);
                     list = "";
                     if(userTickets.length != 0 || userTickets === undefined){
                         let i = 0;

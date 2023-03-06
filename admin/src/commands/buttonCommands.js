@@ -97,7 +97,7 @@ function readButtonCommands(bot){
             console.log(UserInfo);
             let user_data = UserInfo.owner;
             console.log(user_data);
-            ctx.state.user_arr = user_data.split(' / ');
+            ctx.state.user_arr = user_data.split(' - ');
             console.log(ctx.state.user_arr);
             axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
                 chat_id: `${ctx.state.user_arr[1]}`,
@@ -139,7 +139,7 @@ function readButtonCommands(bot){
             console.log(UserInfo);
             let user_data = UserInfo.owner;
             console.log(user_data);
-            ctx.state.user_arr = user_data.split(' / ');
+            ctx.state.user_arr = user_data.split(' - ');
             console.log(ctx.state.user_arr);
             axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
                 chat_id: `${ctx.state.user_arr[1]}`,
