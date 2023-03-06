@@ -14,6 +14,7 @@ setCommentaryScene.enter(async ctx => {
 })
 
 setCommentaryScene.on('text', async ctx => {
+    await doc.useServiceAccountAuth(creds);
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[0];
     const rows = await sheet.getRows();
