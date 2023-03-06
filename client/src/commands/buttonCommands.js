@@ -47,11 +47,11 @@ function readCommandsButton(bot){
     bot.action(/get_products_(.+)_(.+)/, (ctx) => {
         const [type, id] = ctx.match.slice(1);
         if(type === "shop"){
-            const shop = shopList.shops.find(shop => shop.id === id);
+            const shop = shopList.shops.find(shop => shop.id === Number(id));
             console.log(shop);
             ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, type));
         }else if(type === "rest"){
-            const shop = restList.shops.find(shop => shop.id === id);
+            const shop = restList.shops.find(shop => shop.id === Number(id));
             console.log(shop);
             ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, type));
         }
