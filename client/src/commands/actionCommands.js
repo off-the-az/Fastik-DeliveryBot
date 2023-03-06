@@ -54,13 +54,24 @@ function readCommandsAction(bot){
         }
         list = "";
         let tickets = new Ticket();
-        userTickets = await tickets.getByUsername(`@${ctx.chat.id}%20(${ctx.chat.first_name}%20${ctx.chat.last_name != undefined ? ctx.chat.last_name : '\b'})`);
-        if(userTickets.length != 0){
+        let Users = new User();
+        let user = await Users.getByUsername(ctx.chat.id);
+        userTickets = await tickets.getByUsername(`${user.client_name}%20-%20${ctx.chat.id}`);
+        list = "";
+        if(userTickets.length != 0 || userTickets === undefined){
             let i = 0;
             userTickets[numberOfTicketInList].itemlist.forEach(el => {
                 list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
             })
-            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: @${userTickets[numberOfTicketInList].courier != "" ? '@'+userTickets[numberOfTicketInList].courier : "В очікуванні на кур'єра ⌛"}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Очікує підтвердження ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Очікує доставлення🚗' : 'Доставлено✅'}`,
+            let courier = "";
+            if(userTickets[numberOfTicketInList].courier != ""){
+                let cour_arr = userTickets[numberOfTicketInList].courier.split('(');
+                let final_res = cour_arr[1].split(')')
+                courier = final_res[0];
+            }else{
+                courier = "В очікуванні на кур'єра ⌛"
+            }
+            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${courier}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
                 {
                     reply_markup: {
                         inline_keyboard: numberOfTicketInList != 0 ? [
@@ -86,13 +97,24 @@ function readCommandsAction(bot){
         }else ++numberOfTicketInList;
         list = "";
         let tickets = new Ticket();
-        userTickets = await tickets.getByUsername(`@${ctx.chat.id}%20(${ctx.chat.first_name}%20${ctx.chat.last_name != undefined ? ctx.chat.last_name : '\b'})`);
-        if(userTickets.length != 0){
+        let Users = new User();
+        let user = await Users.getByUsername(ctx.chat.id);
+        userTickets = await tickets.getByUsername(`${user.client_name}%20-%20${ctx.chat.id}`);
+        list = "";
+        if(userTickets.length != 0 || userTickets === undefined){
             let i = 0;
             userTickets[numberOfTicketInList].itemlist.forEach(el => {
                 list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
             })
-            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${userTickets[numberOfTicketInList].courier != "" ? '@'+userTickets[numberOfTicketInList].courier : "В очікуванні на кур'єра ⌛"}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Очікує підтвердження ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Очікує доставлення🚗' : 'Доставлено✅'}`,
+            let courier = "";
+            if(userTickets[numberOfTicketInList].courier != ""){
+                let cour_arr = userTickets[numberOfTicketInList].courier.split('(');
+                let final_res = cour_arr[1].split(')')
+                courier = final_res[0];
+            }else{
+                courier = "В очікуванні на кур'єра ⌛"
+            }
+            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${courier}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
                 {
                     reply_markup: {
                         inline_keyboard: numberOfTicketInList != 0 ? [
