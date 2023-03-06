@@ -156,7 +156,15 @@ function readCommandsButton(bot){
                         userTickets[numberOfTicketInList].itemlist.forEach(el => {
                             list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
                         })
-                        await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${userTickets[numberOfTicketInList].courier != "" ? '@'+userTickets[numberOfTicketInList].courier : "В очікуванні на кур'єра ⌛"}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+                        let courier = "";
+                        if(userTickets[numberOfTicketInList].courier != ""){
+                            let cour_arr = userTickets[numberOfTicketInList].courier.split('(');
+                            let final_res = cour_arr[1].split(')')
+                            courier = final_res[0];
+                        }else{
+                            courier = "В очікуванні на кур'єра ⌛"
+                        }
+                        await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${courier}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
                             {
                                 reply_markup: {
                                     inline_keyboard: numberOfTicketInList != 0 ? [
