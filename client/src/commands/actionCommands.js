@@ -44,18 +44,14 @@ function readCommandsAction(bot){
             await ctx.reply('Дякую за роботу, все що потрібно було мені - отримано, ти молодець😉\nОбери пункт у меню який тобі до вподоби, щоби продовжити користування системою😌', {reply_markup: menu_btn});
         }
     })
-
-    
     bot.action('main', async (ctx) => {
         await ctx.reply('Обери пункт у меню який тобі до вподоби, щоби продовжити користування системою😌', {reply_markup: menu_btn});
     });
-
     bot.action('reinit_adress', async (ctx) => {
         await ctx.deleteMessage();
         await ctx.reply( 'Перед тим як я оформлю твоє замовлення вкажи свою адресу куди саме потрібно все доставити за прикладом - вул. Симоненка буд 2 кв 41 😉')
         await getAdress(bot);
     });
-
     bot.action('finish_order', async (ctx) => {
         await ctx.deleteMessage();
         let Tickets = new Ticket();
@@ -114,7 +110,6 @@ function readCommandsAction(bot){
             await ctx.reply('Замовлення успішно оформленно✅\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn});    
         }
     })
-
     bot.action(/add_(.+)_(.+)_(.+)/, async (ctx) => {
         const [list, shop_id, item_id] = ctx.match.slice(1);
         await ctx.deleteMessage();
@@ -185,7 +180,6 @@ function readCommandsAction(bot){
             
         }
     })
-    
     bot.action(/get_list_(.+)_(.+)/, async (ctx) => {
         await ctx.deleteMessage();
         const [list, shop_id, item_id] = ctx.match.slice(1);
@@ -199,7 +193,6 @@ function readCommandsAction(bot){
             ctx.reply(`Обери товари з даного списку що знаходиться під даним повідомленням😌`, getProductsKeyboard(shop, "rest"));
         }
     })
-
     bot.action(/get_(.+)_(.+)_(.+)/, async (ctx) => {
         const [list, shop_id, item_id] = await ctx.match.slice(1);
         console.log(`get_${list}_${shop_id}_${item_id}`);

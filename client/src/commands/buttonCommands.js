@@ -89,10 +89,16 @@ function readCommandsButton(bot){
                             [
                                 {text: "◀️", callback_data: "previous"},
                                 {text: "▶️", callback_data: "next"}
+                            ],
+                            [
+                                {text: 'Залишити відгук', callback_data: `send_comment_${userTickets[numberOfTicketInList]._id}`}
                             ]
                         ] : [
                             [
                                 {text: "▶️", callback_data: "next"}
+                            ],
+                            [
+                                {text: 'Залишити відгук', callback_data: `send_comment_${userTickets[numberOfTicketInList]._id}`}
                             ]
                         ],
                         resize_keyboard: true
@@ -132,10 +138,16 @@ function readCommandsButton(bot){
                             [
                                 {text: "◀️", callback_data: "previous"},
                                 {text: "▶️", callback_data: "next"}
+                            ],
+                            [
+                                {text: 'Залишити відгук', callback_data: `send_comment_${userTickets[numberOfTicketInList]._id}`}
                             ]
                         ] : [
                             [
                                 {text: "▶️", callback_data: "next"}
+                            ],
+                            [
+                                {text: 'Залишити відгук', callback_data: `send_comment_${userTickets[numberOfTicketInList]._id}`}
                             ]
                         ],
                         resize_keyboard: true
@@ -259,10 +271,16 @@ function readCommandsButton(bot){
                                         [
                                             {text: "◀️", callback_data: "previous"},
                                             {text: "▶️", callback_data: "next"}
+                                        ],
+                                        [
+                                            {text: 'Залишити відгук', callback_data: `send_comment_${userTickets[numberOfTicketInList]._id}`}
                                         ]
                                     ] : [
                                         [
                                             {text: "▶️", callback_data: "next"}
+                                        ],
+                                        [
+                                            {text: 'Залишити відгук', callback_data: `send_comment_${userTickets[numberOfTicketInList]._id}`}
                                         ]
                                     ],
                                     resize_keyboard: true
