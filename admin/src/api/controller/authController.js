@@ -18,6 +18,28 @@ async function login(username){
     return lvl;
 }
 
+async function register(username){
+    let status = false;
+    try {
+
+        let controller = new User();
+        const user = {
+            "name" : username,
+            "logged": true
+        }
+        await controller.addUser(user);
+        status = true;
+
+    } catch (error) {
+        status = false;
+        console.log('====================================');
+        console.log('Error at authController.\nError info: ' + error);
+        console.log('====================================');
+    }
+    return status;
+}
+
 module.exports = {
     login,
+    register
 }
