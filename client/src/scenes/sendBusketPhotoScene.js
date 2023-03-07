@@ -26,7 +26,7 @@ sendBusketPhotoScene.on('photo', async ctx => {
     }).then(async data => {
         await ctx.reply('Фото із кошиком успішно відправлено✅\nОчікуй на дзвіночок від менеджера 😉');
     }).catch(async (err) => {
-        console.error('Error');
+        console.error(err);
     });
     await ctx.reply( 'Відгук надіслано успішно✅\nСподіваюсь тобі сподобався наш сервіс😉', {reply_markup:menu_btn});
     ctx.scene.leave('sendBusketPhoto');
