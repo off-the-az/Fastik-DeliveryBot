@@ -1,45 +1,36 @@
 const { Scenes } =  require("telegraf");
+const axois = require('axios');
+const fs = require('fs');
+const {User} = require('../api/controller/index');
 const {menu_btn} = require('../models/buttons');
-const {Ticket} = require('../api/controller/index');
 const cmdList = require('../models/cmd.list.json');
-const { GoogleSpreadsheet } = require('google-spreadsheet');
-const creds = require('../models/fastik-gsheet.json');
 
-const doc = new GoogleSpreadsheet("1RT3cT9YWAlAX0QMIxx8XIVJ2SRz8CqsHSVdhrKxK2vU");
+const sendBusketPhotoScene = new Scenes.BaseScene('sendBusketPhoto');
 
-const setCommentaryScene = new Scenes.BaseScene('setCommentary');
-
-setCommentaryScene.enter(async ctx => {
-    await ctx.reply('Вкажи оцінку від 1 до 5');
+sendBusketPhotoScene.enter(async ctx => {
+    await ctx.reply('Надішли нам фото/скрін де вказано, що саме ти хочеш у нас замовити і ми з часом звʼяжемось задля уточнень 😉');
 })
 
-setCommentaryScene.on('text', async ctx => {
-    let controller = new Ticket();
-    await doc.useServiceAccountAuth(creds);
-    await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
-    const rows = await sheet.getRows();
-    let rowToUpdate;
-    rows.forEach((row) => {
-        if((row._rawData[0] === ctx.state.ticket) || (row._rawData[0].localeCompare(ctx.state.ticket))){
-            rowToUpdate = row;
-        }
+sendBusketPhotoScene.on('photo', async ctx => {
+    let Users = new User();
+    let user = await Users.getByUsername(String(ctx.chat.id));
+    const photo = ctx.message.photo[ctx.message.photo.length - 1];
+    const caption = `Ім'я: ${user.client_name}\nНомер телефону: +${user.pnumber}`;
+    const form = new FormData();
+    form.append('chat_id', 5612131198); // FIXME: Need to change chat_id to Admin chat_id
+    form.append('photo', photo.file_id);
+    form.append('caption', caption);
+    await axios.post(`https://api.telegram.org/bot6072101802:AAFnz6QLR4YssmqLeVMaRSAy5oA5bPd4AkU/sendPhoto`, form, {
+        headers: form.getHeaders()
+    }).then(async data => {
+        await ctx.reply('Фото із кошиком успішно відправлено✅\nОчікуй на дзвіночок від менеджера 😉');
     });
-    
-    if(ctx.update.message.text != cmdList.buttons.map(button => button.name)){
-        rowToUpdate._rawData[11] = ctx.message.text;
-        console.log(rowToUpdate._rawData);
-        await rowToUpdate.save();
-        let commentary_num = isNaN(Number(ctx.update.message.text)) != true ? Number(ctx.update.message.text) : 0;
-        console.log(commentary_num);
-        await controller.updateTicket(ctx.state.ticket, {commentary: commentary_num});
-        await ctx.reply( 'Відгук надіслано успішно✅\nСподіваюсь тобі сподобався наш сервіс😉', {reply_markup:menu_btn});
-        ctx.scene.leave('setCommentary');
-    }
+    await ctx.reply( 'Відгук надіслано успішно✅\nСподіваюсь тобі сподобався наш сервіс😉', {reply_markup:menu_btn});
+    ctx.scene.leave('sendBusketPhoto');
 })
 
-setCommentaryScene.leave(ctx => {
+sendBusketPhotoScene.leave(ctx => {
     console.log('Leave')
 })
 
-module.exports = setCommentaryScene;
+module.exports = sendBusketPhotoScene;

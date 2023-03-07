@@ -291,6 +291,9 @@ function readCommandsButton(bot){
                         await ctx.reply(`Ти ще нічого не замовляв😕`);
                     }
                     break;
+                case "Замовити з фото кошика 🧺":
+                    await ctx.enter.scene('sendBusketPhoto');
+                    break;
                 default:
                     console.log(ctx);
                     break;
