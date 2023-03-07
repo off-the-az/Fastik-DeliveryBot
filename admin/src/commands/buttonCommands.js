@@ -439,7 +439,7 @@ function readButtonCommands(bot){
             case "Персонал 🗂️":
                 await showAllFromTeam(ctx);
                 break;
-            case "Товари 🗄️":
+            case "Склад 🗄️":
                 await ctx.reply('Оберіть дію із якою ви бажаєте взаємодіяти із товарами', {
                     reply_markup:{
                         inline_keyboard:[
@@ -472,6 +472,9 @@ function readButtonCommands(bot){
                         ]
                     ]
                 }}); 
+                break;
+            case "Оновити платіжні дані 💳":
+                await ctx.scene.enter('setCardNumber');
                 break;
             case 'Взяти замовлення 📝':
                 await showFreeTickets(ctx);

@@ -59,4 +59,15 @@ async function addShop(file, newShop) {
     }
   }
 
-module.exports = {addProductsToShop, addShop};
+async function addCardNumber(data){
+    try {
+      const filepath = path.join(process.cwd(), '..', 'MenuDB', 'paymethod.json');
+      await writeFileAsync(filepath, JSON.stringify(data));
+      console.log(`Added info with data - ${data}`);
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+}
+
+module.exports = {addProductsToShop, addShop, addCardNumber};
