@@ -10,7 +10,7 @@ setCardNumberScene.enter(async ctx => {
 setCardNumberScene.on('message', async ctx => {
     if(isNaN(Number(ctx.update.message.text)) != true){
         console.info(Number(ctx.update.message.text));
-        await ctx.reply('', {reply_markup: admin_menu_btn});
+        await ctx.reply('Дані успішно оновлено!', {reply_markup: admin_menu_btn});
     }else{
         await ctx.reply('Сталась помилка! Спробуй ще раз!', {reply_markup: admin_menu_btn});
     }
