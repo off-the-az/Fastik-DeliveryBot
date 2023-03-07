@@ -19,11 +19,14 @@ sendBusketPhotoScene.on('photo', async ctx => {
     const form = new FormData();
     form.append('chat_id', 5612131198); // FIXME: Need to change chat_id to Admin chat_id
     form.append('photo', photo.file_id);
+    console.info(photo.file_id);
     form.append('caption', caption);
     await axios.post(`https://api.telegram.org/bot${bot_sender}/sendPhoto`, form, {
         headers: form.getHeaders()
     }).then(async data => {
         await ctx.reply('Фото із кошиком успішно відправлено✅\nОчікуй на дзвіночок від менеджера 😉');
+    }).catch(async (err) => {
+        console.error('Error');
     });
     await ctx.reply( 'Відгук надіслано успішно✅\nСподіваюсь тобі сподобався наш сервіс😉', {reply_markup:menu_btn});
     ctx.scene.leave('sendBusketPhoto');
