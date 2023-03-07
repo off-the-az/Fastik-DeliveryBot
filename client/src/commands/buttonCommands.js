@@ -292,7 +292,7 @@ function readCommandsButton(bot){
                     }
                     break;
                 case "Замовити з фото кошика 🧺":
-                    await ctx.enter.scene('sendBusketPhoto');
+                    await ctx.scene.enter('sendBusketPhoto');
                     break;
                 default:
                     console.log(ctx);
