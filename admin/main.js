@@ -17,7 +17,7 @@ bot.start(async (ctx) => {
     let user = await Users.getByUsername(ctx.chat.id);
     
     if(user === null || user === undefined || user.user_lvl === undefined){
-        await new Auth.register(String(ctx.chat.id));
+        await Auth.register(String(ctx.chat.id));
         await ctx.reply('Упс...😕\nСхоже ви не маєте прав доступу до системи. Якщо бажаєте стати частинкою нашої команди натискай "Хочу в команду 🙋" і передай необхідні дані адміністрації 😉', {
             reply_markup:{
                 keyboard:[
