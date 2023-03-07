@@ -15,7 +15,7 @@ sendBusketPhotoScene.on('photo', async ctx => {
     let Users = new User();
     let user = await Users.getByUsername(String(ctx.chat.id));
     const photo = ctx.message.photo[ctx.message.photo.length - 1];
-    const caption = `Прийгло нове замовлення\nІм'я: ${user.client_name}\nНомер телефону: +${user.pnumber}`;
+    const caption = `Прийшло нове замовлення\nІм'я: ${user.client_name}\nНомер телефону: +${user.pnumber}`;
     const form = new FormData();
     form.append('chat_id', 	-1001819835850);
     form.append('photo', photo.file_id);
