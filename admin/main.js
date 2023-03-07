@@ -15,8 +15,8 @@ bot.use(stage.middleware());
 bot.start(async (ctx) => {
     let Users = new User();
     let user = await Users.getByUsername(ctx.chat.id);
-    let lvl = user.user_lvl;
-    if(user === null || user === undefined || lvl === undefined || user.user_lvl === undefined){
+    
+    if(user === null || user === undefined || user.user_lvl === undefined){
         await new Auth.register(String(ctx.chat.id));
         await ctx.reply('Упс...😕\nСхоже ви не маєте прав доступу до системи. Якщо бажаєте стати частинкою нашої команди натискай "Хочу в команду 🙋" і передай необхідні дані адміністрації 😉', {
             reply_markup:{
@@ -28,6 +28,7 @@ bot.start(async (ctx) => {
             }
         });
     }else{
+        let lvl = user.user_lvl;
         lvl === 1 ? 
         await ctx.reply(`Вітаю, ${ctx.chat.first_name}🤗\nЛаскаво просимо вас в Кур'єр-Панель системи 'Fastik'. Оберіть пункт з меню через який ви бажаєте працювати із системою😊`, {reply_markup: courier_menu_btn}) : 
         lvl === 2 ? 
