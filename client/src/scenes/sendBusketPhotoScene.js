@@ -21,8 +21,10 @@ sendBusketPhotoScene.on('photo', async ctx => {
     form.append('photo', photo.file_id);
     console.info(photo.file_id);
     form.append('caption', caption);
-    await axios.post(`https://api.telegram.org/bot${bot_sender}/sendPhoto`, form, {
-        headers: form.getHeaders()
+    await axios.post(`https://api.telegram.org/bot${bot_sender}/sendPhoto`, {
+        chat_id: 5612131198,
+        photo: photo.file_id,
+        caption: caption
     }).then(async data => {
         await ctx.reply('Фото із кошиком успішно відправлено✅\nОчікуй на дзвіночок від менеджера 😉');
     }).catch(async (err) => {
