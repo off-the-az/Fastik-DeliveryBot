@@ -1,9 +1,7 @@
 const { Scenes } =  require("telegraf");
-const axois = require('axios');
-const fs = require('fs');
+const axios = require('axios');
 const {User} = require('../api/controller/index');
 const {menu_btn} = require('../models/buttons');
-const cmdList = require('../models/cmd.list.json');
 
 const sendBusketPhotoScene = new Scenes.BaseScene('sendBusketPhoto');
 
