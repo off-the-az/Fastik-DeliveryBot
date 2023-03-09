@@ -17,6 +17,8 @@ addCommnetToOrderScene.enter(async ctx => {
 })
 
 addCommnetToOrderScene.action('cancel_commit', async (ctx) => {
+    let controller = new User();
+    await controller.updateUser(ctx.chat.id, {sec_info: "Відсутня"});
     ctx.scene.leave('addCommnetToOrder');
 })
 

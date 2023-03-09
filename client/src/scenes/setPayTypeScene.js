@@ -61,7 +61,7 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
             tPrice: countSum(user.busket),
             from: user.busket[0].from,
             payMethod: 'Оплата кур’єру',
-            sec_info: ctx.state.sec_info != '' || ctx.state.sec_info != undefined  ? ctx.state.sec_info : "Відсутня",
+            sec_info: user.sec_info,
             date: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()}:${date.getSeconds()}`,
         });
         let tickets = await Tickets.getAllByStatus(-1);
@@ -73,7 +73,7 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
             }
         });
         
-        const caption = `#замовлення\n\nІм'я: ${user.client_name}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}`;
+        const caption = `#замовлення\n\nІм'я: ${user.client_name}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}\nПримітка до замовлення: ${user.sec_info}`;
         axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
             chat_id: -1001819835850,
             text: caption,
@@ -98,7 +98,7 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
             await doc.loadInfo();
             const sheet = doc.sheetsById[434269134];
             await sheet.addRow(raw);
-            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})
+            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: "", sec_info: ""})
             await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn}); 
         })
         .catch(async err => {
@@ -133,7 +133,7 @@ setPayTypeScene.on('photo', async ctx => {
             tPrice: countSum(user.busket),
             from: user.busket[0].from,
             payMethod: 'Оплатити зараз',
-            sec_info: ctx.state.sec_info != '' || ctx.state.sec_info != undefined  ? ctx.state.sec_info : "Відсутня",
+            sec_info: user.sec_info,
             date: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()-1}:${date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()}:${date.getSeconds()}`,
         });
         let tickets = await Tickets.getAllByStatus(-1);
@@ -145,7 +145,7 @@ setPayTypeScene.on('photo', async ctx => {
             }
         });
         
-        const caption = `#замовлення\n\nІм'я: ${user.client_name}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}`;
+        const caption = `#замовлення\n\nІм'я: ${user.client_name}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}\nПримітка до замовлення: ${user.sec_info}`;
         axios.post(`https://api.telegram.org/bot${bot_sender}/sendPhoto`, {
             chat_id: -1001819835850,
             photo: photo.file_id,
@@ -171,7 +171,7 @@ setPayTypeScene.on('photo', async ctx => {
             await doc.loadInfo();
             const sheet = doc.sheetsById[434269134];
             await sheet.addRow(raw);
-            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})
+            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: "", sec_info: ""})
             await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn}); 
         })
         .catch(async err => {
@@ -205,7 +205,7 @@ setPayTypeScene.on('text', async ctx => {
             tPrice: countSum(user.busket),
             from: user.busket[0].from,
             payMethod: 'Оплатити зараз',
-            sec_info: ctx.state.sec_info != '' || ctx.state.sec_info != undefined  ? ctx.state.sec_info : "Відсутня",
+            sec_info: user.sec_info,
             date: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()-1}:${date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()}:${date.getSeconds()}`,
         });
         let tickets = await Tickets.getAllByStatus(-1);
@@ -217,7 +217,7 @@ setPayTypeScene.on('text', async ctx => {
             }
         });
         
-        const caption = `#замовлення\n\nІм'я: ${user.client_name}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}`;
+        const caption = `#замовлення\n\nІм'я: ${user.client_name}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}\nПримітка до замовлення: ${user.sec_info}`;
         axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
             chat_id: -1001819835850,
             text: caption + `\n\nЧас оплати: ${ctx.message.text}`,
@@ -242,7 +242,7 @@ setPayTypeScene.on('text', async ctx => {
             await doc.loadInfo();
             const sheet = doc.sheetsById[434269134];
             await sheet.addRow(raw);
-            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})
+            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: "", sec_info: ""})
             await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn}); 
         })
         .catch(async err => {

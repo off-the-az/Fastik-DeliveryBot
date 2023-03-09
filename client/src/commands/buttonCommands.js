@@ -223,6 +223,7 @@ function readCommandsButton(bot){
                             await ctx.reply( 'Твій кошик виглядає ось так:')
                             await ctx.reply( `${itemList}`)
                             await ctx.reply( `До сплати: ${countSum(user_info.busket)} грн💸`)
+                            await ctx.reply( `Примітка до замовлення: ${countSum(user_info.sec_info)}`)
                             await ctx.reply( 'Якщо все вірно, натисни "Продовжити ▶️" і замовлення буде оформлено 😉\nЯкщо щось потрібно змінити це можеш зробити зараз 😌', {
                                 reply_markup: {
                                     inline_keyboard:[
