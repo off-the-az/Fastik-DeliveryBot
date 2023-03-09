@@ -73,12 +73,10 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
         });
         
         const caption = `#замовлення\n\nІм'я: ${ticket.owner}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}`;
-        const form = new FormData();
-        form.append('chat_id', 	-1001819835850);
-        form.append('text', caption);
-        form.append('reply_markup', {inline_keyboard:[[{text: 'Підтвердити замовлення', callback_data: `accept_order_${ticket._id}`}]]});
-        axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, form, {
-            headers: form.getHeaders()
+        axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
+            chat_id: -1001819835850,
+            text: caption,
+            reply_markup: {inline_keyboard:[[{text: 'Підтвердити замовлення', callback_data: `accept_order_${ticket._id}`}]]},
         })
         .then(async data => {
             const raw = {
