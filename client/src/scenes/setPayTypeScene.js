@@ -38,7 +38,6 @@ setPayTypeScene.enter(async ctx => {
 setPayTypeScene.action(/pay_(.+)/, async ctx => {
     const [paymethod] = ctx.match.slice(1);
     await ctx.deleteMessage();
-    
     let Tickets = new Ticket();
     let Users = new User();
     if(String(paymethod) === 'now'){
@@ -113,6 +112,8 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
 
 setPayTypeScene.on('photo', async ctx => {
     console.log('Now with ' + method_type);
+    let Tickets = new Ticket();
+    let Users = new User();
     if(method_type === 'now'){
         let photo = ctx.message.photo.length != 0 || ctx.message.photo != undefined ? ctx.message.photo[ctx.message.photo.length - 1] : '';
         await ctx.reply('Оформляю твоє замовлення...');
