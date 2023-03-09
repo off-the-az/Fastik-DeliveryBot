@@ -40,7 +40,6 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
     if(String(paymethod) === 'now'){
         ctx.state.photo = ''
         ctx.state.pay_time = ''
-        //await controller.updateUser(ctx.chat.id, {payMethod: 'Оплатити зараз'});
         await ctx.reply('Для того щоби оплатити зараз дане замовлення потрібно зробити переказ на карту за реквізитом та надіслати підтвердження у вигляді фото, де є підтвердження переказу чи точний час виконаного переказу.\nРеквізити для оплати - ' + Number(pay_method.card_number));
     }else if(String(paymethod) === 'later'){
         await ctx.reply('Оформляю твоє замовлення...');
