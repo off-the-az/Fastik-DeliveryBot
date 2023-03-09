@@ -79,12 +79,8 @@ function readCommandsAction(bot){
         await ctx.scene.enter('setNumber');
     });
     bot.action('finish_order', async (ctx) => {
-        await ctx.deleteMessage();
         let Tickets = new Ticket();
         let Users = new User();
-        ctx.state.pay_type = 'now'
-        ctx.state.photo = ''
-        ctx.state.pay_time = ''
         user = await Users.getByUsername(ctx.chat.id)
         if(user.pnumber === ""){
             await ctx.scene.enter('setNumber');
