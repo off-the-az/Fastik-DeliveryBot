@@ -89,6 +89,8 @@ function readCommandsAction(bot){
             await ctx.scene.enter('setName');
         }else if(user.payMethod === ""){
             await ctx.scene.enter('setpaymethod');
+        }if(user.adress === ""){
+            await ctx.scene.enter('setAddress');
         }else{
             await doc.useServiceAccountAuth(creds);
             let string_busket = ""
