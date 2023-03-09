@@ -138,8 +138,11 @@ function readCommandsAction(bot){
             await sheet.addRow(raw);
             await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})
             if(ctx.state.pay_type === 'now'){
+
+                console.log("In progress later");
                 const caption = `#замовлення\n\nІм'я: ${ticket.owner}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}`;
-                if(ctx.state.photo != ''){
+                if(ctx.state.photo != '' || ctx.state.photo != undefined){
+                    console.log("In progress now with photo");
                     const form = new FormData();
                     form.append('chat_id', 	-1001819835850);
                     form.append('photo', ctx.state.photo.file_id);
@@ -153,6 +156,7 @@ function readCommandsAction(bot){
                         console.error(err);
                     });
                 }else{
+                    console.log("In progress now without photo");
                     const form = new FormData();
                     form.append('chat_id', 	-1001819835850);
                     form.append('text', caption + '\n\n' + 'Час оплати: ' + ctx.state.pay_time);
@@ -169,6 +173,7 @@ function readCommandsAction(bot){
                     });
                 }
             }else if(ctx.state.pay_type === 'later'){
+                console.log("In progress later");
                 const caption = `#замовлення\n\nІм'я: ${ticket.owner}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}`;
                 const form = new FormData();
                 form.append('chat_id', 	-1001819835850);
