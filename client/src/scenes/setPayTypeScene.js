@@ -18,6 +18,9 @@ function countSum(list){
     return sum;
 }
 
+let method_type = ''
+let pay_time = ''
+
 setPayTypeScene.enter(async ctx => {
     await ctx.reply('Обери спосіб оплати, через який ти будеш розраховуватись за замовлення. Усі варіанти вказано в нижній панелі під полем де ти вносиш повідомлення', {reply_markup:{
         inline_keyboard: [
@@ -35,12 +38,11 @@ setPayTypeScene.enter(async ctx => {
 setPayTypeScene.action(/pay_(.+)/, async ctx => {
     const [paymethod] = ctx.match.slice(1);
     await ctx.deleteMessage();
-    ctx.state.method_type = ''
-    ctx.state.pay_time = ''
+    
     let Tickets = new Ticket();
     let Users = new User();
     if(String(paymethod) === 'now'){
-        ctx.state.method_type = 'now'
+        method_type = 'now'
         await ctx.reply('Для того щоби оплатити зараз дане замовлення потрібно зробити переказ на карту за реквізитом та надіслати підтвердження у вигляді фото, де є підтвердження переказу чи точний час виконаного переказу.\nРеквізити для оплати - ' + Number(pay_method.card_number));
     }else if(String(paymethod) === 'later'){
         await ctx.reply('Оформляю твоє замовлення...');
@@ -110,8 +112,8 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
 })
 
 setPayTypeScene.on('photo', async ctx => {
-    console.log('Now with' + ctx.state.method_type);
-    if(ctx.state.method_type === 'now'){
+    console.log('Now with ' + method_type);
+    if(method_type === 'now'){
         let photo = ctx.message.photo.length != 0 || ctx.message.photo != undefined ? ctx.message.photo[ctx.message.photo.length - 1] : '';
         await ctx.reply('Оформляю твоє замовлення...');
         await doc.useServiceAccountAuth(creds);
