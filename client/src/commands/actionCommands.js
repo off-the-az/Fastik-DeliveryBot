@@ -92,6 +92,7 @@ function readCommandsAction(bot){
         }else if(user.adress === ""){
             await ctx.scene.enter('setAddress');
         }else{
+            console.log(ctx.state.pay_type)
             await doc.useServiceAccountAuth(creds);
             let string_busket = ""
             let i = 0;
