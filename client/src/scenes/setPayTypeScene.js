@@ -1,6 +1,6 @@
 const { Scenes } =  require("telegraf");
 const {menu_btn} = require('../models/buttons');
-const {User} = require('../api/controller/index');
+const {User, Ticket} = require('../api/controller/index');
 const pay_method = require('../../../MenuDB/paymethod.json')
 const axios = require('axios');
 const FormData = require('form-data');
