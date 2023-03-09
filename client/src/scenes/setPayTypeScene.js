@@ -183,6 +183,77 @@ setPayTypeScene.on('photo', async ctx => {
     }
 });
 
+setPayTypeScene.on('text', async ctx => {
+    console.log('Now with ' + method_type);
+    let Tickets = new Ticket();
+    let Users = new User();
+    if(method_type === 'now'){
+        await ctx.reply('Оформляю твоє замовлення...');
+        await doc.useServiceAccountAuth(creds);
+        let user = await Users.getByUsername(ctx.chat.id)
+        let string_busket = ""
+        let i = 0;
+        user.busket.forEach(item => {
+            string_busket += `${++i}) ${item.name} - ${item.price} грн/о.т (${item.amount}шт).\n`
+        })
+        let date = new Date();
+        let result = await Tickets.addTicket({
+            itemlist: user.busket,
+            owner: user.client_name + ' - ' + ctx.chat.id,
+            adress: user.adress,
+            pnumber: user.pnumber,
+            tPrice: countSum(user.busket),
+            from: user.busket[0].from,
+            payMethod: 'Оплатити зараз',
+            sec_info: ctx.state.sec_info != '' || ctx.state.sec_info != undefined  ? ctx.state.sec_info : "Відсутня",
+            date: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()-1}:${date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()}:${date.getSeconds()}`,
+        });
+        let tickets = await Tickets.getAllByStatus(-1);
+        let ticket;
+        tickets.forEach(row => {
+            let compInfo = String(row.date);
+            if(compInfo === result.date && row.owner === result.owner){
+                ticket = row;
+            }
+        });
+        
+        const caption = `#замовлення\n\nІм'я: ${user.client_name}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}`;
+        axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, {
+            chat_id: -1001819835850,
+            text: caption + `\n\nЧас оплати: ${ctx.message.text}`,
+            reply_markup: {inline_keyboard:[[{text: 'Підтвердити замовлення', callback_data: `accept_order_${ticket._id}`}]]},
+        })
+        .then(async data => {
+            const raw = {
+                'Унікальний номер чеку': ticket._id,
+                'Покупець': user.client_name,
+                'Кошик': string_busket,
+                'Заклад': ticket.from,
+                'Примітка': ticket.sec_info,
+                'Адреса доставки': ticket.adress,
+                'Номер телефону клієнта': ticket.pnumber,
+                'Сумма': ticket.tPrice,
+                'Спосіб оплати': ticket.payMethod,
+                'Дата замовлення': ticket.date,
+                'Кур\'єр': ticket.courier,
+                'Статус': 'Очікує підтвердження',
+                'Оцінка': 0,
+            };
+            await doc.loadInfo();
+            const sheet = doc.sheetsById[434269134];
+            await sheet.addRow(raw);
+            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})
+            await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn}); 
+        })
+        .catch(async err => {
+            await ctx.reply('Щось пішло не так! Повторіть спробу');
+            console.log(err);
+        });
+        
+        ctx.scene.leave('setpaymethod');
+    }
+});
+
 setPayTypeScene.leave(async ctx => {
     console.log(ctx.state.pay_type);   
     console.log('Leave');
