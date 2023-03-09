@@ -213,8 +213,6 @@ function readCommandsButton(bot){
                         await ctx.scene.enter('setNumber');
                     }else if(user_info.client_name === ""){
                         await ctx.scene.enter('setName');
-                    }else if(user_info.payMethod === ""){
-                        await ctx.scene.enter('setpaymethod');
                     }else{
                         let itemList = "";
                         let i = 0;
