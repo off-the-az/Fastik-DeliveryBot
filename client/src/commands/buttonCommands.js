@@ -179,7 +179,7 @@ function readCommandsButton(bot){
                             list += `${++i}) ${el.name} - ${el.price} грн 💸 (${el.amount} шт)\n`;
                         })
                         await ctx.reply( 'Твій кошик виглядає ось так:')
-                        await ctx.reply( `${itemList}`)
+                        await ctx.reply( `${list}`)
                         await ctx.reply( `До сплати: ${countSum(user_info.busket)} грн💸`)
                         await ctx.reply( 'Обери дію через яку ти будеш взаємодіяти із власним кошиком', {reply_markup:busket_menu_btn})
                     }else{
