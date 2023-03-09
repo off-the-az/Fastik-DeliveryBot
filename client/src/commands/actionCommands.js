@@ -90,11 +90,10 @@ function readCommandsAction(bot){
             await ctx.scene.enter('setNumber');
         }else if(user.client_name === ""){
             await ctx.scene.enter('setName');
-        }else if(user.payMethod === ""){
-            await ctx.scene.enter('setpaymethod');
         }else if(user.adress === ""){
             await ctx.scene.enter('setAddress');
         }else{
+            await ctx.scene.enter('setpaymethod');
             console.log(ctx.state.pay_type);
             await doc.useServiceAccountAuth(creds);
             let string_busket = ""
@@ -141,59 +140,6 @@ function readCommandsAction(bot){
             const sheet = doc.sheetsById[434269134];
             await sheet.addRow(raw);
             await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})
-            if(ctx.state.pay_type === 'now'){
-
-                console.log("In progress later");
-                const caption = `#замовлення\n\nІм'я: ${ticket.owner}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}`;
-                if(ctx.state.photo != '' || ctx.state.photo != undefined){
-                    console.log("In progress now with photo");
-                    const form = new FormData();
-                    form.append('chat_id', 	-1001819835850);
-                    form.append('photo', ctx.state.photo.file_id);
-                    form.append('caption', caption);
-                    form.append('reply_markup', {inline_keyboard:[[{text: 'Підтвердити замовлення', callback_data: `accept_order_${ticket._id}`}]]});
-                    await axios.post(`https://api.telegram.org/bot${bot_sender}/sendPhoto`, form, {
-                        headers: form.getHeaders()
-                    }).then(async data => {
-                        await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn});    
-                    }).catch(async (err) => {
-                        console.error(err);
-                    });
-                }else{
-                    console.log("In progress now without photo");
-                    const form = new FormData();
-                    form.append('chat_id', 	-1001819835850);
-                    form.append('text', caption + '\n\n' + 'Час оплати: ' + ctx.state.pay_time);
-                    form.append('reply_markup', {inline_keyboard:[[{text: 'Підтвердити замовлення', callback_data: `accept_order_${ticket._id}`}]]});
-                    axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, form, {
-                        headers: form.getHeaders()
-                    })
-                    .then(async data => {
-                        await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn});    
-                    })
-                    .catch(async err => {
-                        await ctx.reply('Щось пішло не так! Повторіть спробу');
-                        console.log(err);
-                    });
-                }
-            }else if(ctx.state.pay_type === 'later'){
-                console.log("In progress later");
-                const caption = `#замовлення\n\nІм'я: ${ticket.owner}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}`;
-                const form = new FormData();
-                form.append('chat_id', 	-1001819835850);
-                form.append('text', caption);
-                form.append('reply_markup', {inline_keyboard:[[{text: 'Підтвердити замовлення', callback_data: `accept_order_${ticket._id}`}]]});
-                axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, form, {
-                    headers: form.getHeaders()
-                })
-                .then(async data => {
-                    await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn});    
-                })
-                .catch(async err => {
-                    await ctx.reply('Щось пішло не так! Повторіть спробу');
-                    console.log(err);
-                });
-            }
         }
     })
     bot.action(/add_(.+)_(.+)_(.+)/, async (ctx) => {
