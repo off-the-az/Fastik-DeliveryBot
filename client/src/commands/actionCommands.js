@@ -90,52 +90,6 @@ function readCommandsAction(bot){
             await ctx.scene.enter('setAddress');
         }else{
             await ctx.scene.enter('setpaymethod');
-            /*console.log(ctx.state.pay_type);
-            await doc.useServiceAccountAuth(creds);
-            let string_busket = ""
-            let i = 0;
-            user.busket.forEach(item => {
-                string_busket += `${++i}) ${item.name} - ${item.price} грн/о.т (${item.amount}шт).\n`
-            })
-            let date = new Date();
-            let result = await Tickets.addTicket({
-                itemlist: user.busket,
-                owner: user.client_name + ' - ' + ctx.chat.id,
-                adress: user.adress,
-                pnumber: user.pnumber,
-                tPrice: countSum(user.busket),
-                from: user.busket[0].from,
-                payMethod: user.payMethod,
-                sec_info: ctx.state.sec_info != '' || ctx.state.sec_info != undefined  ? ctx.state.sec_info : "Відсутня",
-                date: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()}:${date.getSeconds()}`,
-            });
-            let tickets = await Tickets.getAllByStatus(-1);
-            let ticket;
-            tickets.forEach(row => {
-                let compInfo = String(row.date);
-                if(compInfo === result.date && row.owner === result.owner){
-                    ticket = row;
-                }
-            });
-            const raw = {
-                'Унікальний номер чеку': ticket._id,
-                'Покупець': user.client_name,
-                'Кошик': string_busket,
-                'Заклад': ticket.from,
-                'Примітка': ticket.sec_info,
-                'Адреса доставки': ticket.adress,
-                'Номер телефону клієнта': ticket.pnumber,
-                'Сумма': ticket.tPrice,
-                'Спосіб оплати': ticket.payMethod,
-                'Дата замовлення': ticket.date,
-                'Кур\'єр': ticket.courier,
-                'Статус': 'Очікує підтвердження',
-                'Оцінка': 0,
-            };
-            await doc.loadInfo();
-            const sheet = doc.sheetsById[434269134];
-            await sheet.addRow(raw);
-            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})*/
         }
     })
     bot.action(/add_(.+)_(.+)_(.+)/, async (ctx) => {

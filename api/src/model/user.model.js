@@ -36,7 +36,11 @@ const User = new Schema({
     user_lvl: {
         type: Number,
         default: 0
-    }
+    },
+    sec_info: {
+        type: String,
+        default: "Відсутня"
+    },
 })
 
 module.exports = mongoose.model('User', User)
