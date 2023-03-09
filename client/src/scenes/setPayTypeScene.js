@@ -63,6 +63,7 @@ setPayTypeScene.on('message', async ctx => {
 });
 
 setPayTypeScene.leave(async ctx => {
+    console.log(ctx.state.pay_type);
     console.log('Leave');
 })
 
