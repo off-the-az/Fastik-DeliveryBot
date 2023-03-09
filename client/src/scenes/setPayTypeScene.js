@@ -98,7 +98,7 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
             await doc.loadInfo();
             const sheet = doc.sheetsById[434269134];
             await sheet.addRow(raw);
-            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: "", sec_info: ""})
+            await Users.updateUser(ctx.chat.id, {busket: [], payMethod: "", sec_info: ""})
             await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn}); 
         })
         .catch(async err => {
@@ -171,7 +171,7 @@ setPayTypeScene.on('photo', async ctx => {
             await doc.loadInfo();
             const sheet = doc.sheetsById[434269134];
             await sheet.addRow(raw);
-            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: "", sec_info: ""})
+            await Users.updateUser(ctx.chat.id, {busket: [], payMethod: "", sec_info: ""})
             await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn}); 
         })
         .catch(async err => {
@@ -242,7 +242,7 @@ setPayTypeScene.on('text', async ctx => {
             await doc.loadInfo();
             const sheet = doc.sheetsById[434269134];
             await sheet.addRow(raw);
-            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: "", sec_info: ""})
+            await Users.updateUser(ctx.chat.id, {busket: [], payMethod: "", sec_info: ""})
             await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn}); 
         })
         .catch(async err => {
