@@ -181,7 +181,7 @@ function readButtonCommands(bot){
             userTickets[numberOfTicketInList].itemlist.forEach(el => {
                 list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
             })
-            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nПримітка: ${userTickets[numberOfTicketInList].sec_info}`,
                 {
                     reply_markup: {
                         inline_keyboard: numberOfTicketInList != 0 ? [
@@ -221,7 +221,7 @@ function readButtonCommands(bot){
             userTickets[numberOfTicketInList].itemlist.forEach(el => {
                 list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
             })
-            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nПримітка: ${userTickets[numberOfTicketInList].sec_info}`,
                 {
                     reply_markup: {
                         inline_keyboard: numberOfTicketInList != 0 ? [
@@ -266,7 +266,7 @@ function readButtonCommands(bot){
             userTickets[numberOfTicketInList].itemlist.forEach(el => {
                 list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
             })
-            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nПримітка: ${userTickets[numberOfTicketInList].sec_info}`,
                 {
                     reply_markup: {
                         inline_keyboard: numberOfTicketInList != 0 ? [
@@ -309,7 +309,7 @@ function readButtonCommands(bot){
             userTickets[numberOfTicketInList].itemlist.forEach(el => {
                 list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
             })
-            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+            await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nПримітка: ${userTickets[numberOfTicketInList].sec_info}`,
                 {
                     reply_markup: {
                         inline_keyboard: numberOfTicketInList != 0 ? [
@@ -548,7 +548,7 @@ async function showReservedTickets(ctx){
         userTickets[numberOfTicketInList].itemlist.forEach(el => {
             list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
         })
-        await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+        await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nПримітка: ${userTickets[numberOfTicketInList].sec_info}`,
             {
                 reply_markup: {
                     inline_keyboard: numberOfTicketInList != 0 ? [
@@ -586,7 +586,7 @@ async function showFreeTickets(ctx){
         userTickets[numberOfTicketInList].itemlist.forEach(el => {
             list += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
         })
-        await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+        await ctx.reply(`Індекс замовлення: ${userTickets[numberOfTicketInList]._id}\n\nДата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\nВласник: ${userTickets[numberOfTicketInList].owner}\n\nНомер телефону: ${userTickets[numberOfTicketInList].pnumber}\n\nАдреса доставки: ${userTickets[numberOfTicketInList].adress}\n\nСума до сплати: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nПримітка: ${userTickets[numberOfTicketInList].sec_info}`,
             {
                 reply_markup: {
                     inline_keyboard: numberOfTicketInList != 0 ? [
