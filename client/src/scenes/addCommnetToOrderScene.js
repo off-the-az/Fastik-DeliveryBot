@@ -1,9 +1,7 @@
 const { Scenes } =  require("telegraf");
-const {menu_btn} = require('../models/buttons');
 const {User} = require('../api/controller/index');
 
 const addCommnetToOrderScene = new Scenes.BaseScene('addCommnetToOrder');
-let type = "adress";
 
 addCommnetToOrderScene.enter(async ctx => {
     await ctx.reply('Вкажи примітку до власного замовлення 😉', {reply_markup:{
