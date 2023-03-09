@@ -94,7 +94,7 @@ function readCommandsAction(bot){
             await ctx.scene.enter('setAddress');
         }else{
             await ctx.scene.enter('setpaymethod');
-            console.log(ctx.state.pay_type);
+            /*console.log(ctx.state.pay_type);
             await doc.useServiceAccountAuth(creds);
             let string_busket = ""
             let i = 0;
@@ -139,7 +139,7 @@ function readCommandsAction(bot){
             await doc.loadInfo();
             const sheet = doc.sheetsById[434269134];
             await sheet.addRow(raw);
-            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})
+            await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})*/
         }
     })
     bot.action(/add_(.+)_(.+)_(.+)/, async (ctx) => {
