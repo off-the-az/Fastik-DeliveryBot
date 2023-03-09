@@ -3,7 +3,6 @@ const {menu_btn,rest_menu_btn,shop_menu_btn,tomain_inline_btn,busket_menu_btn,} 
 const shopList = require('../../../MenuDB/shops.json');
 const restList = require('../../../MenuDB/restaurant.json');
 const {User, Ticket} = require('../api/controller/index');
-const {getAdress} = require('./inputCommands');
 const cmdList = require('../models/cmd.list.json');
 
 let numberOfTicketInList = 0;
@@ -82,7 +81,7 @@ function readCommandsButton(bot){
             }else{
                 courier = "В очікуванні на кур'єра ⌛"
             }
-            await ctx.reply(`Дата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${courier}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+            await ctx.reply(`Дата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${courier}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === -1 ? 'Очікує підтвердження ⌛' : userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛': userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
                 {
                     reply_markup: {
                         inline_keyboard: numberOfTicketInList != 0 ? [
@@ -131,7 +130,7 @@ function readCommandsButton(bot){
             }else{
                 courier = "В очікуванні на кур'єра ⌛"
             }
-            await ctx.reply(`Дата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${courier}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+            await ctx.reply(`Дата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${courier}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === -1 ? 'Очікує підтвердження ⌛' : userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛': userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
                 {
                     reply_markup: {
                         inline_keyboard: numberOfTicketInList != 0 ? [
@@ -182,7 +181,7 @@ function readCommandsButton(bot){
                         await ctx.reply( `До сплати: ${countSum(data.busket)} грн💸`)
                         await ctx.reply( 'Обери дію через яку ти будеш взаємодіяти із власним кошиком', {reply_markup:busket_menu_btn})
                     }else{
-                        await ctx.reply( 'Нажаль твій кошик пустий 😢', {reply_markup:menu_btn})
+                        await ctx.reply( 'Спочатку склади все в кошик або відправ фото\скрін списку продуктів, які потрібно привезти😌', {reply_markup:menu_btn})
                     }
                     break;
                 case 'Очистити 🗑️':
@@ -208,7 +207,7 @@ function readCommandsButton(bot){
                         await ctx.reply( 'Спочатку склади все в кошик або відправ фото\скрін списку продуктів, які потрібно привезти😌', {reply_markup:menu_btn})
                     }else if(user_info.adress === ""){
                         await ctx.reply( 'Перед тим як я оформлю твоє замовлення вкажи свою адресу куди саме потрібно все доставити за прикладом - вул. Симоненка буд 2 кв 41 😉')
-                        await getAdress(bot);
+                        await ctx.scene.enter('setAddress');
                     }else if(user_info.pnumber === ""){
                         await ctx.scene.enter('setNumber');
                     }else if(user_info.client_name === ""){
@@ -220,11 +219,11 @@ function readCommandsButton(bot){
                             itemList += `${++i}) ${el.name} - ${el.price} grn (${el.amount} шт)\n`;
                         })
                         if(itemList != ""){
-                            await ctx.reply(`Ім'я: ${user_info.client_name}\nАдреса доставки: ${user_info.adress}`)
+                            await ctx.reply(`Ім'я: ${user_info.client_name}\nАдреса доставки: ${user_info.adress}\nНомер телефону: ${user_info.pnumber}`)
                             await ctx.reply( 'Твій кошик виглядає ось так:')
                             await ctx.reply( `${itemList}`)
                             await ctx.reply( `До сплати: ${countSum(user_info.busket)} грн💸`)
-                            await ctx.reply( 'Якщо все вірно, натисни "Продовжити ▶️" і замовлення буде оформлено😉\nУ разі якщо адресу вказав неправильно - натисни "Змінити адресу 🔄" аби змінити адресу доставки😌', {
+                            await ctx.reply( 'Якщо все вірно, натисни "Продовжити ▶️" і замовлення буде оформлено 😉\nЯкщо щось потрібно змінити це можеш зробити зараз 😌', {
                                 reply_markup: {
                                     inline_keyboard:[
                                         [
@@ -236,8 +235,7 @@ function readCommandsButton(bot){
                                         [
                                             {text: "Примітка до замовлення", callback_data: "add_comment_to_order"},
                                         ],
-                                        [
-                                            
+                                        [   
                                             {text: "Продовжити ▶️", callback_data: "finish_order"}
                                         ],
                                     ]
@@ -267,7 +265,7 @@ function readCommandsButton(bot){
                         }else{
                             courier = "В очікуванні на кур'єра ⌛"
                         }
-                        await ctx.reply(`Дата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${courier}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛' : userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
+                        await ctx.reply(`Дата замовлення: ${userTickets[numberOfTicketInList].date}\n\nСписок замовлених товарів:\n\n${list}\n\nКур'єр: ${courier}\n\nЗагальна ціна: ${userTickets[numberOfTicketInList].tPrice} грн💸\n\nСтатус замовлення: ${userTickets[numberOfTicketInList].status === -1 ? 'Очікує підтвердження ⌛' : userTickets[numberOfTicketInList].status === 0 ? 'Складаємо замовлення ⌛': userTickets[numberOfTicketInList].status === 1 ? 'Курєр забрав замовлення 🚗' : 'Доставлено ✅'}`,
                             {
                                 reply_markup: {
                                     inline_keyboard: numberOfTicketInList != 0 ? [
@@ -295,7 +293,18 @@ function readCommandsButton(bot){
                     }
                     break;
                 case "Швидке замовлення 🧺":
-                    await ctx.scene.enter('sendBusketPhoto');
+                    await ctx.reply('Обери спосіб швидкого замовлення в системі Fastik', {
+                        reply_markup: {
+                            inline_keyboard:[
+                                [
+                                    {text: 'Функція ʼПеретелефонуй меніʼ', callback_data: 'call_me'}
+                                ],
+                                [  
+                                    {text: 'Фото/скріншот кошика', callback_data: 'send_busket_photo'}
+                                ]
+                            ]
+                        }
+                    });
                     break;
                 default:
                     console.log(ctx);

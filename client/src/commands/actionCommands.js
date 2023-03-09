@@ -1,13 +1,16 @@
-const Telegraf = require('telegraf');
 require('dotenv').config();
-const creds = require('../models/fastik-gsheet.json');
+const axios = require('axios');
+const Telegraf = require('telegraf');
+const FormData = require('form-data');
 const {menu_btn} = require('../models/buttons');
+const creds = require('../models/fastik-gsheet.json');
 const shopList = require('../../../MenuDB/shops.json');
-const restList = require('../../../MenuDB/restaurant.json');
 const {User, Ticket} = require('../api/controller/index');
-const {getAdress} = require('./inputCommands');
+const restList = require('../../../MenuDB/restaurant.json');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
+
+const bot_sender = '5986688122:AAGfiCiyNIX_2shqSolWn-LtC0owxobDPAw';
 const doc = new GoogleSpreadsheet('1RT3cT9YWAlAX0QMIxx8XIVJ2SRz8CqsHSVdhrKxK2vU');
 
 
@@ -43,6 +46,27 @@ function readCommandsAction(bot){
         }else{
             await ctx.reply('Дякую за роботу, все що потрібно було мені - отримано, ти молодець😉\nОбери пункт у меню який тобі до вподоби, щоби продовжити користування системою😌', {reply_markup: menu_btn});
         }
+    })
+    bot.action('send_busket_photo', async ctx => {
+        await ctx.scene.enter('sendBusketPhoto');
+    })
+    bot.action('call_me', async ctx => {
+        let Users = new User();
+        let user = Users.getByUsername(String(ctx.chat.id));
+        const caption = `#перетелефонуй_мені\n\nІм'я: ${user.client_name}\nНомер телефону: ${user.pnumber}`;
+        const form = new FormData();
+        form.append('chat_id', 	-1001819835850);
+        form.append('text', caption);
+        axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, form, {
+            headers: form.getHeaders()
+        })
+        .then(async data => {
+            await ctx.reply('Повідомлення менеджеру надіслано! Очікуйте виклику від менеджера');
+        })
+        .catch(async err => {
+            await ctx.reply('Щось пішло не так! Повторіть спробу');
+            console.log(err);
+        });
     })
     bot.action('main', async (ctx) => {
         await ctx.reply('Обери пункт у меню який тобі до вподоби, щоби продовжити користування системою😌', {reply_markup: menu_btn});
@@ -81,6 +105,7 @@ function readCommandsAction(bot){
                 tPrice: countSum(user.busket),
                 from: user.busket[0].from,
                 payMethod: user.payMethod,
+                sec_info: ctx.state.sec_info != '' || ctx.state.sec_info != undefined  ? ctx.state.sec_info : "Відсутня",
                 date: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()}:${date.getSeconds()}`,
             });
             let tickets = await Tickets.getAllByStatus(0);
@@ -96,21 +121,68 @@ function readCommandsAction(bot){
                 'Покупець': user.client_name,
                 'Кошик': string_busket,
                 'Заклад': ticket.from,
+                'Примітка': ticket.sec_info,
                 'Адреса доставки': ticket.adress,
                 'Номер телефону клієнта': ticket.pnumber,
                 'Сумма': ticket.tPrice,
                 'Спосіб оплати': ticket.payMethod,
                 'Дата замовлення': ticket.date,
                 'Кур\'єр': ticket.courier,
-                'Статус': 'Складаємо замовлення',
+                'Статус': 'Очікує підтвердження',
                 'Оцінка': 0,
             };
             await doc.loadInfo();
             const sheet = doc.sheetsById[434269134];
             await sheet.addRow(raw);
-            
             await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})
-            await ctx.reply('Замовлення успішно оформленно✅\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn});    
+            if(ctx.state.pay_type === 'now'){
+                const caption = `#замовлення\n\nІм'я: ${ticket.owner}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}`;
+                if(ctx.state.photo != ''){
+                    const form = new FormData();
+                    form.append('chat_id', 	-1001819835850);
+                    form.append('photo', ctx.state.photo.file_id);
+                    form.append('caption', caption);
+                    form.append('reply_markup', {inline_keyboard:[[{text: 'Підтвердити замовлення', callback_data: `accept_order_${ticket._id}`}]]});
+                    await axios.post(`https://api.telegram.org/bot${bot_sender}/sendPhoto`, form, {
+                        headers: form.getHeaders()
+                    }).then(async data => {
+                        await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn});    
+                    }).catch(async (err) => {
+                        console.error(err);
+                    });
+                }else{
+                    const form = new FormData();
+                    form.append('chat_id', 	-1001819835850);
+                    form.append('text', caption + '\n\n' + 'Час оплати: ' + ctx.state.pay_time);
+                    form.append('reply_markup', {inline_keyboard:[[{text: 'Підтвердити замовлення', callback_data: `accept_order_${ticket._id}`}]]});
+                    axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, form, {
+                        headers: form.getHeaders()
+                    })
+                    .then(async data => {
+                        await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn});    
+                    })
+                    .catch(async err => {
+                        await ctx.reply('Щось пішло не так! Повторіть спробу');
+                        console.log(err);
+                    });
+                }
+            }else if(ctx.state.pay_type === 'later'){
+                const caption = `#замовлення\n\nІм'я: ${ticket.owner}\nНомер телефону: ${ticket.pnumber}\nКошик:\n${string_busket}\nЗаклад: ${ticket.from}\nСума до сплати: ${ticket.tPrice}\nСпосіб оплати: ${ticket.payMethod}`;
+                const form = new FormData();
+                form.append('chat_id', 	-1001819835850);
+                form.append('text', caption);
+                form.append('reply_markup', {inline_keyboard:[[{text: 'Підтвердити замовлення', callback_data: `accept_order_${ticket._id}`}]]});
+                axios.post(`https://api.telegram.org/bot${bot_sender}/sendMessage`, form, {
+                    headers: form.getHeaders()
+                })
+                .then(async data => {
+                    await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn});    
+                })
+                .catch(async err => {
+                    await ctx.reply('Щось пішло не так! Повторіть спробу');
+                    console.log(err);
+                });
+            }
         }
     })
     bot.action(/add_(.+)_(.+)_(.+)/, async (ctx) => {
@@ -255,6 +327,9 @@ function readCommandsAction(bot){
             ctx.state.ticket = ticket_id;
             await ctx.scene.enter('setCommentary');
         }
+    })
+    bot.action('add_comment_to_order', async ctx =>{
+        await ctx.scene.enter('addCommnetToOrder');
     })
 }
 

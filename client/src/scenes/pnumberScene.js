@@ -6,7 +6,7 @@ const Telegraf = require('telegraf')
 const pnumberScene = new Scenes.BaseScene('setNumber');
 
 pnumberScene.enter(async ctx => {
-    await ctx.reply('Поділись своїм номером телефону або вкажи свій номер телефону, щоби із тобою міг в майбутньому зв\'язатись кур\'єр', {
+    await ctx.reply('Поділись своїм номером телефону або вкажи свій номер телефону в форматі +380ХХХХХХХХХ, щоби із тобою міг в майбутньому зв\'язатись кур\'єр', {
         reply_markup: {
           keyboard: [
             [

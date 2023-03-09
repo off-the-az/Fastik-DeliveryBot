@@ -20,7 +20,7 @@ sendBusketPhotoScene.on('photo', async ctx => {
     form.append('chat_id', 	-1001819835850);
     form.append('photo', photo.file_id);
     console.info(photo.file_id);
-    form.append('caption', caption);
+    form.append('caption', '#швидке_замовлення_через_фото\n\n' + caption);
     await axios.post(`https://api.telegram.org/bot${bot_sender}/sendPhoto`, form, {
         headers: form.getHeaders()
     }).then(async data => {

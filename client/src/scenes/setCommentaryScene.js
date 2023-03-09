@@ -27,7 +27,7 @@ setCommentaryScene.on('text', async ctx => {
     });
     
     if(ctx.update.message.text != cmdList.buttons.map(button => button.name)){
-        rowToUpdate._rawData[11] = ctx.message.text;
+        rowToUpdate._rawData[12] = ctx.message.text;
         console.log(rowToUpdate._rawData);
         await rowToUpdate.save();
         let commentary_num = isNaN(Number(ctx.update.message.text)) != true ? Number(ctx.update.message.text) : 0;

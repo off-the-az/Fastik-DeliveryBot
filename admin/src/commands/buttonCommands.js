@@ -86,8 +86,8 @@ function readButtonCommands(bot){
                     rowToUpdate = row;
                 }
             });
-            rowToUpdate._rawData[10] = 'Очікує доставки';
-            rowToUpdate._rawData[9] = user.name + "(" + user.client_name + ")";
+            rowToUpdate._rawData[11] = 'Очікує доставки';
+            rowToUpdate._rawData[10] = user.name + "(" + user.client_name + ")";
             console.log(rowToUpdate._rawData);
             await rowToUpdate.save();
             await Tickets.updateTicket(ticket_id, {courier: user.name + "(" + user.client_name + ")", status: 1});
@@ -130,7 +130,7 @@ function readButtonCommands(bot){
                     rowToUpdate = row;
                 }
             });
-            rowToUpdate._rawData[10] = 'Доставлено';
+            rowToUpdate._rawData[11] = 'Доставлено';
             console.log(rowToUpdate._rawData);
             await rowToUpdate.save();
             await ctx.reply('Замовлення успішно доставлено ✅\nТак тримати, колего!😌', {reply_markup: courier_menu_btn});

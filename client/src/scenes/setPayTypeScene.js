@@ -24,9 +24,13 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
     console.log(paymethod);
     let controller = new User();
     if(String(paymethod) === 'now'){
+        ctx.state.pay_type = 'now'
+        ctx.state.photo = ''
+        ctx.state.pay_time = ''
         await controller.updateUser(ctx.chat.id, {payMethod: 'Оплатити зараз'});
-        await ctx.reply('Для того щоби оплатити зараз дане замовлення потрібно зробити переказ на карту за даним реквізитом - ' + Number(pay_method.card_number));
+        await ctx.reply('Для того щоби оплатити зараз дане замовлення потрібно зробити переказ на карту за реквізитом та надіслати підтвердження у вигляді фото, де є підтвердження переказу чи точний час виконаного переказу.\nРеквізити для оплати - ' + Number(pay_method.card_number));
     }else if(String(paymethod) === 'later'){
+        ctx.state.pay_type = 'later'
         await controller.updateUser(ctx.chat.id, {payMethod: 'Оплата кур’єру'});
         await ctx.reply('Дані успішно оновлено! Завершуй оформлення замовлення, натиснувши ʼПродовжитиʼ!)', {
             reply_markup: {
@@ -41,25 +45,21 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
     }
 })
 
-setPayTypeScene.on('photo', async ctx => {
-    let Users = new User();
-    let user = await Users.getByUsername(String(ctx.chat.id));
-    const photo = ctx.message.photo[ctx.message.photo.length - 1];
-    const caption = `Прийшло нове замовлення\nІм'я: ${user.client_name}\nНомер телефону: +${user.pnumber}`;
-    const form = new FormData();
-    form.append('chat_id', 	-1001819835850);
-    form.append('photo', photo.file_id);
-    console.info(photo.file_id);
-    form.append('caption', caption);
-    await axios.post(`https://api.telegram.org/bot${bot_sender}/sendPhoto`, form, {
-        headers: form.getHeaders()
-    }).then(async data => {
-        await ctx.reply('Фото із кошиком успішно відправлено✅\nОчікуй на дзвіночок від менеджера 😉');
-    }).catch(async (err) => {
-        console.error(err);
+setPayTypeScene.on('message', async ctx => {
+    if(ctx.state.pay_time === 'now'){
+        ctx.state.photo = ctx.message.photo.length != 0 || ctx.message.photo != undefined ? ctx.message.photo[ctx.message.photo.length - 1] : '';
+        ctx.state.pay_time = ctx.message.text;
+        await ctx.reply('Дані успішно оновлено! Завершуй оформлення замовлення, натиснувши ʼПродовжитиʼ!)', {
+            reply_markup: {
+                inline_keyboard:[
+                    [
+                        {text: 'Продовжити', callback_data: 'finish_order'}
+                    ]
+                ]
+            }
+        });
         ctx.scene.leave('setpaymethod');
-    });
-    ctx.scene.leave('setpaymethod');
+    }
 });
 
 setPayTypeScene.leave(async ctx => {
