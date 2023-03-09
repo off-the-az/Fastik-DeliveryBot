@@ -6,7 +6,7 @@ const Telegraf = require('telegraf')
 const pnumberScene = new Scenes.BaseScene('setNumber');
 
 pnumberScene.enter(async ctx => {
-    await ctx.reply('Поділись своїм номером телефону, щоби із тобою міг в майбутньому зв\'язатись кур\'єр', {
+    await ctx.reply('Поділись своїм номером телефону або вкажи свій номер телефону, щоби із тобою міг в майбутньому зв\'язатись кур\'єр', {
         reply_markup: {
           keyboard: [
             [
@@ -24,7 +24,7 @@ pnumberScene.enter(async ctx => {
 })
 
 pnumberScene.on('message', async (ctx) => {
-    const phoneNumber = ctx.message.text
+    const phoneNumber = ctx.message.contact.phone_number != undefined ? ctx.message.contact.phone_number : ctx.message.text
     let Users = new User();
     await Users.updateUser(ctx.chat.id, {pnumber: String(phoneNumber)});
     await ctx.scene.leave('setNumber');
