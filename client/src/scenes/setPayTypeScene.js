@@ -98,11 +98,9 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
             const sheet = doc.sheetsById[434269134];
             await sheet.addRow(raw);
             await Users.updateUser(ctx.chat.id, {busket: [], adress: "", payMethod: ""})
-            await ctx.deleteMessage();
             await ctx.reply('Замовлення успішно оформленно✅\nОЧікуй підтвердження від менеджера!\nЩоб переглянути замовлення натисни - "Історія покупок 📒" і дізнайся деталі кожного твого замовлення😌', {reply_markup: menu_btn}); 
         })
         .catch(async err => {
-            await ctx.deleteMessage();
             await ctx.reply('Щось пішло не так! Повторіть спробу');
             console.log(err);
         });
