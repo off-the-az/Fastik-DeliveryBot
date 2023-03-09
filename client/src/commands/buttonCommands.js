@@ -233,7 +233,7 @@ function readCommandsButton(bot){
                                             {text: "Змінити номер телефону 🔄", callback_data: "reinit_pnumber"},
                                         ],
                                         [
-                                            {text: "Примітка до замовлення", callback_data: "add_comment_to_order"},
+                                            {text: "Примітка до замовлення", callback_data: "set_comment_to_order"},
                                         ],
                                         [   
                                             {text: "Продовжити ▶️", callback_data: "finish_order"}

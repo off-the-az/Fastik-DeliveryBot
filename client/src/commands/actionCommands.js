@@ -235,7 +235,7 @@ function readCommandsAction(bot){
             await ctx.scene.enter('setCommentary');
         }
     })
-    bot.action('add_comment_to_order', async ctx =>{
+    bot.action('set_comment_to_order', async ctx =>{
         await ctx.scene.enter('addCommnetToOrder');
     })
     bot.action(/accept_order_(.+)/, async (ctx) => {
