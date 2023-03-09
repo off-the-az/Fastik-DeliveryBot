@@ -108,7 +108,7 @@ function readCommandsAction(bot){
                 sec_info: ctx.state.sec_info != '' || ctx.state.sec_info != undefined  ? ctx.state.sec_info : "Відсутня",
                 date: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()}:${date.getSeconds()}`,
             });
-            let tickets = await Tickets.getAllByStatus(0);
+            let tickets = await Tickets.getAllByStatus(-1);
             let ticket;
             tickets.forEach(row => {
                 let compInfo = String(row.date);
