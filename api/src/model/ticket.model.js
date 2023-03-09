@@ -40,11 +40,15 @@ const Ticket = new Schema({
     },
     status: {
         type: Number,
-        default: 0
+        default: -1
     },
     commentary: {
         type: Number,
         default: 0
+    },
+    sec_info: {
+        type: String,
+        default: "Відсутня"
     },
 })
 

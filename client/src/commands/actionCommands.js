@@ -52,6 +52,9 @@ function readCommandsAction(bot){
         await ctx.reply( 'Перед тим як я оформлю твоє замовлення вкажи свою адресу куди саме потрібно все доставити за прикладом - вул. Симоненка буд 2 кв 41 😉')
         await getAdress(bot);
     });
+    bot.action('reinit_adress', async (ctx) => {
+        await ctx.scene.enter('setNumber');
+    });
     bot.action('finish_order', async (ctx) => {
         await ctx.deleteMessage();
         let Tickets = new Ticket();

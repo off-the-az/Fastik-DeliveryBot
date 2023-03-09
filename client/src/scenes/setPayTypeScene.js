@@ -26,7 +26,6 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
     if(String(paymethod) === 'now'){
         await controller.updateUser(ctx.chat.id, {payMethod: 'Оплатити зараз'});
         await ctx.reply('Для того щоби оплатити зараз дане замовлення потрібно зробити переказ на карту за даним реквізитом - ' + Number(pay_method.card_number));
-        await ctx.scene.leave('setNumber');
     }else if(String(paymethod) === 'later'){
         await controller.updateUser(ctx.chat.id, {payMethod: 'Оплата кур’єру'});
         await ctx.reply('Дані успішно оновлено! Завершуй оформлення замовлення, натиснувши ʼПродовжитиʼ!)', {
@@ -38,9 +37,30 @@ setPayTypeScene.action(/pay_(.+)/, async ctx => {
                 ]
             }
         });
-        await ctx.scene.leave('setNumber');
+        ctx.scene.leave('setpaymethod');
     }
 })
+
+setPayTypeScene.on('photo', async ctx => {
+    let Users = new User();
+    let user = await Users.getByUsername(String(ctx.chat.id));
+    const photo = ctx.message.photo[ctx.message.photo.length - 1];
+    const caption = `Прийшло нове замовлення\nІм'я: ${user.client_name}\nНомер телефону: +${user.pnumber}`;
+    const form = new FormData();
+    form.append('chat_id', 	-1001819835850);
+    form.append('photo', photo.file_id);
+    console.info(photo.file_id);
+    form.append('caption', caption);
+    await axios.post(`https://api.telegram.org/bot${bot_sender}/sendPhoto`, form, {
+        headers: form.getHeaders()
+    }).then(async data => {
+        await ctx.reply('Фото із кошиком успішно відправлено✅\nОчікуй на дзвіночок від менеджера 😉');
+    }).catch(async (err) => {
+        console.error(err);
+        ctx.scene.leave('setpaymethod');
+    });
+    ctx.scene.leave('setpaymethod');
+});
 
 setPayTypeScene.leave(async ctx => {
     console.log('Leave');
