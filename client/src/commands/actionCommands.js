@@ -284,6 +284,12 @@ function readCommandsAction(bot){
     bot.action('add_comment_to_order', async ctx =>{
         await ctx.scene.enter('addCommnetToOrder');
     })
+    bot.action(/accept_order_(.+)/, async (ctx) => {
+        const [ticket_id] = ctx.match.slice(1);
+        let Tickets = new Ticket();
+        await Tickets.updateTicket(ticket_id, {status: 0})
+        await ctx.reply('Замовлення №'+ ticket_id +' підтвердженно');
+    })
 }
 
 module.exports = readCommandsAction;
