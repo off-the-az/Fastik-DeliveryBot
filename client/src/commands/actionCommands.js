@@ -52,7 +52,7 @@ function readCommandsAction(bot){
     })
     bot.action('call_me', async ctx => {
         let Users = new User();
-        let user = Users.getByUsername(String(ctx.chat.id));
+        let user = await Users.getByUsername(String(ctx.chat.id));
         const caption = `#перетелефонуй_мені\n\nІм'я: ${user.client_name}\nНомер телефону: ${user.pnumber}`;
         const form = new FormData();
         form.append('chat_id', 	-1001819835850);
