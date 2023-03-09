@@ -82,6 +82,9 @@ function readCommandsAction(bot){
         await ctx.deleteMessage();
         let Tickets = new Ticket();
         let Users = new User();
+        ctx.state.pay_type = 'now'
+        ctx.state.photo = ''
+        ctx.state.pay_time = ''
         user = await Users.getByUsername(ctx.chat.id)
         if(user.pnumber === ""){
             await ctx.scene.enter('setNumber');
@@ -92,7 +95,7 @@ function readCommandsAction(bot){
         }else if(user.adress === ""){
             await ctx.scene.enter('setAddress');
         }else{
-            console.log(ctx.state.pay_type)
+            console.log(ctx.state.pay_type);
             await doc.useServiceAccountAuth(creds);
             let string_busket = ""
             let i = 0;
