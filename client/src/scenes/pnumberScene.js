@@ -24,7 +24,7 @@ pnumberScene.enter(async ctx => {
 })
 
 pnumberScene.on('message', async (ctx) => {
-    const phoneNumber = ctx.message.contact.phone_number != undefined ? ctx.message.contact.phone_number : ctx.message.text
+    const phoneNumber = ctx.message.contact != undefined ? ctx.message.contact.phone_number : ctx.message.text
     let Users = new User();
     await Users.updateUser(ctx.chat.id, {pnumber: String(phoneNumber)});
     await ctx.scene.leave('setNumber');
