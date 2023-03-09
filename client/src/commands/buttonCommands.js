@@ -197,7 +197,7 @@ function readCommandsButton(bot){
                 case "Вказати адресу 🔄":
                     try {
                         await ctx.reply( 'Перед тим як я оформлю твоє замовлення вкажи свою адресу куди саме потрібно все доставити за прикладом - вул. Симоненка буд 2 кв 41 😉')
-                        await getAdress(bot);
+                        await ctx.scene.enter('setAddress');
                     } catch (error) {
                         console.log(`Error while edit address. Error: ${error}`);
                     }

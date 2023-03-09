@@ -48,11 +48,10 @@ function readCommandsAction(bot){
         await ctx.reply('Обери пункт у меню який тобі до вподоби, щоби продовжити користування системою😌', {reply_markup: menu_btn});
     });
     bot.action('reinit_adress', async (ctx) => {
-        await ctx.deleteMessage();
         await ctx.reply( 'Перед тим як я оформлю твоє замовлення вкажи свою адресу куди саме потрібно все доставити за прикладом - вул. Симоненка буд 2 кв 41 😉')
-        await getAdress(bot);
+        await ctx.scene.enter('setAddress');
     });
-    bot.action('reinit_adress', async (ctx) => {
+    bot.action('reinit_pnumber', async (ctx) => {
         await ctx.scene.enter('setNumber');
     });
     bot.action('finish_order', async (ctx) => {
